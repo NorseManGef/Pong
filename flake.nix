@@ -20,7 +20,7 @@
           {
             packages = with pkgs; [
               clang-tools
-              cmake
+              cmakeWithGui
               codespell
               conan
               cppcheck
