@@ -25,3 +25,7 @@ build
 # MacOS
 
 .DS_Store
+
+# NixOS
+
+.direnv/
