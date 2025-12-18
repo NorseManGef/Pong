@@ -18,6 +18,8 @@ include_directories(
     ${OPENGL_INCLUDE_DIR}
 )
 
+set(CMAKE_EXPORT_COMIPLE_COMMANDS ON)
+
 set(SRC_ARGONENGINE
     common/ArgonEngine/ArgonInit.cpp
     common/ArgonEngine/AudioSystem.cpp
@@ -655,6 +657,14 @@ set(SOURCES
 )
 
 add_executable(argonapp ${SOURCES} )
+
+set_property(TARGET argonapp PROPERTY CXX_STANDARD 11)
+
+target_compile_options(argonapp
+    PRIVATE
+        -Wno-incompatible-pointer-types
+        -Wno-implicit-function-declaration
+)
 
 target_precompile_headers(argonapp
     PRIVATE

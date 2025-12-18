@@ -19,6 +19,7 @@ void ArgonAppFlowControl::animate(){
     static int fps_count=5;
     static int max_count=0;
     static float max_v=0;
+    /*
     if(++fps_count>5){
         std::stringstream str;
         float time =float(t.time()-last_t);
@@ -37,6 +38,16 @@ void ArgonAppFlowControl::animate(){
         if(++max_count>10)max_v=0;
 
     }
+    */
+
+    std::stringstream str;
+    str << "D[0]: " << current_node->dimensions[0] << " "
+        << "D[1]: " << current_node->dimensions[1] << " "
+        << "D[2]: " << current_node->dimensions[2] << " ";
+
+    str << "R: " << Argon::Screen::ratio();
+
+    fps.render_str(str.str().c_str(), font);
 
     Argon::Screen::full_screen = int(input['f'].distance*0.5)%2;
     fps.position[1]=-10;
@@ -57,13 +68,13 @@ void ArgonAppFlowControl::animate(){
     static float x_old=0;
     static float y_old=0;
     Argon::Quaternionf q;
-    Argon::Vector3f view_delta = Argon::Vector3f(input[Argon::kInputIDMouseY].value*4.-y_old,
-            input[Argon::kInputIDMouseX].value*-4.-x_old,
+    Argon::Vector3f view_delta = Argon::Vector3f(0,
+            0,
             0);
 
-    Argon::Vector3f view_delta2 = Argon::Vector3f(input[Argon::kInputIDJoyY].integral*4.,
-            input[Argon::kInputIDJoyX].integral*4.,
-            (input[Argon::kInputIDJoyButton10].integral-input[Argon::kInputIDJoyButton11].integral)*3.);
+    Argon::Vector3f view_delta2 = Argon::Vector3f(0,
+            0,
+            0);
     view_delta+=view_delta2;
     if(length(view_delta)>0.01)
     q.set_angle_axis(length(view_delta),normalize(view_delta));
@@ -71,14 +82,14 @@ void ArgonAppFlowControl::animate(){
     static float VertScrollOld=0;
     Argon::Vector3f jp(0,
                        0,
-                       input[Argon::kInputIDMouseVertScroll].value-VertScrollOld);
-    Argon::Vector3f jp2(input[Argon::kInputIDJoyX2].integral*15,
+                       0);
+    Argon::Vector3f jp2(0,
             0.,
-            -input[Argon::kInputIDJoyY2].integral*15);\
+            0);\
     jp+=jp2;
     VertScrollOld=input[Argon::kInputIDMouseVertScroll].value;
-    x_old=input[Argon::kInputIDMouseX].value*-4.;
-    y_old= input[Argon::kInputIDMouseY].value*4;
+    x_old=0;
+    y_old=0;
     input['w'].integral=
     input['a'].integral=
     input['r'].integral=
@@ -100,12 +111,15 @@ void ArgonAppFlowControl::animate(){
     //Argon::Vector3f translate;
     translate+=q.transform(jp);
     accum_rot *=q;
-    transform_matrix=Argon::IdentityMatrix<float>()*Argon::TranslateMatrix(jp)*Argon::RotateMatrix(q)*transform_matrix;
+    transform_matrix=Argon::IdentityMatrix<float>();
+        //*Argon::TranslateMatrix(jp)*Argon::RotateMatrix(q)*transform_matrix;
 
     //Create the transformation matrix for the camera
-    camera.projection_matrix =Argon::PerspectiveMatrix<float>(20, 1./Argon::Screen::ratio(), 1, 100);
+    camera.projection_matrix =Argon::PerspectiveMatrix<float>(45, 1./Argon::Screen::ratio(), 1, 100);
 
-    camera.matrix =(transform_matrix);
+    //camera.matrix =Argon::PerspectiveMatrix<float>(45, 1./Argon::Screen::ratio(), 1, 100);
+    camera.matrix =Argon::IdentityMatrix<float>()*Argon::TranslateMatrix(translate)*Argon::RotateMatrix(q);
+    
 
     //camera.matrix = ident.matrix();
     //camera.projection_matrix = ident.matrix();
@@ -113,7 +127,7 @@ void ArgonAppFlowControl::animate(){
     camera.become_main_camera();
     ui_camera.become_main_camera2D();
     ui_camera.projection_matrix =Argon::OrthoMatrix<float>(10./Argon::Screen::ratio(), -10./Argon::Screen::ratio(), 10, -10, -10, 10);
-    ui_camera.matrix =Argon::Matrix4f();
+    ui_camera.matrix =Argon::IdentityMatrix<float>();
 
     //Handle flow control
     if(current_node)set_node(current_node->animate(smoothed_time));

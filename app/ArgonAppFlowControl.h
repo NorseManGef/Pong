@@ -22,6 +22,8 @@
 #include "ExplodingTeapots.h"
 #include <ArgonEngine/Text.h>
 #include <sstream>
+#include "pong/pongMenu.h"
+#include "pong/pong.h"
 
 class ArgonAppFlowControl {
 private:
@@ -64,7 +66,7 @@ public:
         font= "resource://GeosansLight.ttf";
         fps.layer=10;
         test_name.layer=10;
-        current_node=std::make_shared<ArgonAppBase>();
+        current_node=std::make_shared<PongMenu>();
 
         left_playback->volume = right_playback->volume=1.0;
         right_playback->direction_factor=left_playback->direction_factor=0.2;
@@ -80,8 +82,8 @@ public:
         peak2->input=right_playback;
         Argon::AudioNode::root_nodes[0]=peak1;
         Argon::AudioNode::root_nodes[1]=peak2;
-       // Argon::AudioNode::root_nodes[0]=opus->left;
-        //Argon::AudioNode::root_nodes[1]=opus->right;
+        Argon::AudioNode::root_nodes[0]=opus->left;
+        Argon::AudioNode::root_nodes[1]=opus->right;
     }
     void animate();
     void set_node(std::shared_ptr<Argon::Node> node){
