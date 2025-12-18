@@ -31,6 +31,16 @@
               vcpkg-tool
               gnumake
               bear
+              ninja
+
+              libGL
+              libx11
+              libxcursor
+              libxext
+              xorg.libXinerama
+              libxrandr
+
+              pulseaudio
             ] ++ (if system == "aarch64-darwin" then [ ] else [ gdb ]);
           };
       });
