@@ -23,7 +23,6 @@
 #include <ArgonEngine/Text.h>
 #include <sstream>
 #include "pong/pongMenu.h"
-#include "pong/pong.h"
 
 class ArgonAppFlowControl {
 private:

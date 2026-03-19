@@ -118,8 +118,17 @@ namespace Argon{
 
     };
 
+    struct Line {
+        const char* begin;
+        const char* end;
+        float width;
+    };
+
     struct Label: public Renderable{
         Argon::Vector2f glpyh_scale;
+        LineStyle line_style;
+        float max_width;
+        bool isMultiLine;
         Label();
         void render_str(const char* string,Argon::VirtualResource font,LineStyle s = kLineLeft);
         MAKE_VISIT_HEAD(Label)

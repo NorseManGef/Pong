@@ -1,0 +1,3 @@
+/home/norsemangef/Coding/C++/Projects/game/CMakeFiles/argonapp.dir
+/home/norsemangef/Coding/C++/Projects/game/CMakeFiles/edit_cache.dir
+/home/norsemangef/Coding/C++/Projects/game/CMakeFiles/rebuild_cache.dir

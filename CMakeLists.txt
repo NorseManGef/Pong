@@ -18,6 +18,8 @@ include_directories(
     ${OPENGL_INCLUDE_DIR}
 )
 
+set(CMAKE_BUILD_TYPE Debug)
+
 set(CMAKE_EXPORT_COMIPLE_COMMANDS ON)
 
 set(SRC_ARGONENGINE
@@ -36,6 +38,7 @@ set(SRC_ARGONENGINE
     common/ArgonEngine/ScoreController.cpp
     common/ArgonEngine/Sprite.cpp
     common/ArgonEngine/Text.cpp
+    common/ArgonEngine/BorderedLabel.cpp
     common/ArgonEngine/Thread.cpp
     common/ArgonEngine/UserInterface.cpp
     common/ArgonEngine/UserMusic.cpp
@@ -49,6 +52,8 @@ set(SRC_ARGONAPP
     app/ArgonAppBase.cpp
     app/ArgonAppFlowControl.cpp
     app/main.cpp
+    app/pong/options.cpp
+    app/pong/ButtonInterface.cpp
 )
 
 set(SRC_BULLET
