@@ -87,6 +87,8 @@ struct menuReturnModal : Argon::Node {
         background.color = Argon::kBlackColor;
 
         question.render_str("Are you sure you want\nto return to menu?", font, Argon::kLineCenter);
+        menu.incKey = "left";
+        menu.decKey = "right";
     }
 
     void hide() {
@@ -115,8 +117,8 @@ struct menuReturnModal : Argon::Node {
 
         background.position.set(0, 0, zAxisPosBG);
 
-        yes.setPosition(-xRange/2, -yRange/2, zAxisPos);
-        no.setPosition(xRange/2, -yRange/2, zAxisPos);
+        yes.setPosition((-xRange/2)+.06, -yRange/2, zAxisPos);
+        no.setPosition((xRange/2)+.05, -yRange/2, zAxisPos);
 
         question.position.set(0, yRange/3, zAxisPos);
         question.scale.set(.16, .16, 1);

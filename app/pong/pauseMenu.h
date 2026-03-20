@@ -47,16 +47,16 @@ struct pauseModal : Argon::Node, std::enable_shared_from_this<pauseModal> {
         mainMenu(mainMenu),
         resume(std::vector<std::string>{"select", "leftClick"},
                [=](){ return backTo; },
-               Argon::Vector2f(.5, .5),
-               Argon::Vector2f(1, 1)),
+               Argon::Vector2f(1, 1),
+               Argon::Vector2f(1.25, 1.25)),
         options(std::vector<std::string>{"select", "leftClick"},
                 [&](){ return std::make_shared<OptionsMenu>(shared_from_this()); },
-                Argon::Vector2f(.5, .5),
-                Argon::Vector2f(1, 1)),
+                Argon::Vector2f(.90, 1),
+                Argon::Vector2f(1.15, 1.25)),
         back(std::vector<std::string>{"select", "leftClick"},
              [=](){ return std::make_shared<menuReturnModal>(shared_from_this(), mainMenu); },
-             Argon::Vector2f(.5, .5),
-             Argon::Vector2f(1, 1)),
+             Argon::Vector2f(1, 1),
+             Argon::Vector2f(1.25, 1.25)),
         menu(std::vector<GrowButton*>{&resume, &options, &back})
     {
         back.willHide = false;
@@ -115,8 +115,8 @@ struct pauseModal : Argon::Node, std::enable_shared_from_this<pauseModal> {
         background.position.set(0,0,zAxisPosBG);
 
         resume.setPosition(0, yRange*.6, zAxisPos);
-        options.setPosition(0, yRange*.2, zAxisPos);
-        back.setPosition(0, -yRange*.2, zAxisPos);
+        options.setPosition(0, yRange*.1, zAxisPos);
+        back.setPosition(0, -yRange*.4, zAxisPos);
         
         if(menu.willHide)hide();
 
