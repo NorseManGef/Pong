@@ -1,7 +1,7 @@
 #ifndef BUTTONUTILS
 #define BUTTONUTILS
 
-#include <ArgonEngine/BorderedLabel.h>
+#include <ArgonEngine/Addons/BorderedLabel.h>
 #include <ArgonEngine/Node.h>
 #include "ButtonInterface.h"
 #include <vector>

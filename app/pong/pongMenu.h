@@ -4,7 +4,7 @@
 #include <ArgonEngine/Sprite.h>
 #include <ArgonEngine/ArgonInit.h>
 #include <ArgonEngine/Hardware.h>
-#include <ArgonEngine/BorderedLabel.h>
+#include <ArgonEngine/Addons/BorderedLabel.h>
 
 #include "pong.h"
 #include "optionsMenu.h"
