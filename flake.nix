@@ -1,5 +1,5 @@
 {
-  description = "A Nix-flake-based C/C++ development environment";
+  description = "The devenv for the Argon Engine";
 
   inputs.nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1.*.tar.gz";
 
