@@ -20,7 +20,7 @@ struct BorderedLabel : public Label, public Sprite {
     BorderedLabel();
 
     /*!
-        \brief generates and loads the BorderedLabel into vram.
+        \brief generates the texture
         \param string the text to be displayed.
         \param font the font to be used.
         \param bgTexture the texture of the background sprite.

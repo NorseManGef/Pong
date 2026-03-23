@@ -135,7 +135,7 @@ namespace Argon{
         Label();
 
         /*!
-            \brief generates and loads the label into vram
+            \brief generates the texture of the label
             \param string the text to be displayed
             \paran font the font to use
             \param s whether to align the text to the center, left, or right; defaults to left
