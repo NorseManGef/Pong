@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   description = "The devenv for the Argon Engine";
+=======
+  description = "A Nix-flake-based C/C++ development environment";
+>>>>>>> forkbranch
 
   inputs.nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1.*.tar.gz";
 
@@ -20,7 +24,11 @@
           {
             packages = with pkgs; [
               clang-tools
+<<<<<<< HEAD
               cmakeWithGui
+=======
+              cmake
+>>>>>>> forkbranch
               codespell
               conan
               cppcheck
