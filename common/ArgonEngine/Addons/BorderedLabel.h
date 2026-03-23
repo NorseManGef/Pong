@@ -1,5 +1,5 @@
-#include "Text.h"
-#include "Sprite.h"
+#include <ArgonEngine/Text.h>
+#include <ArgonEngine/Sprite.h>
 
 #include <iostream>
 
