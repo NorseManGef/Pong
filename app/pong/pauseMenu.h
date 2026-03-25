@@ -45,12 +45,13 @@ struct pauseModal : Argon::Node, std::enable_shared_from_this<pauseModal> {
     pauseModal(std::shared_ptr<Argon::Node> backTo, std::shared_ptr<Argon::Node> mainMenu):
         backTo(backTo),
         mainMenu(mainMenu),
+        zAxisPos(constants::zAxisPos/2),
         resume(std::vector<std::string>{"select", "leftClick"},
                [=](){ return backTo; },
                Argon::Vector2f(1, 1),
                Argon::Vector2f(1.25, 1.25)),
         options(std::vector<std::string>{"select", "leftClick"},
-                [&](){ return std::make_shared<OptionsMenu>(shared_from_this()); },
+                [&](){ return std::make_shared<OptionsMenu>(shared_from_this(), zAxisPos); },
                 Argon::Vector2f(.90, 1),
                 Argon::Vector2f(1.15, 1.25)),
         back(std::vector<std::string>{"select", "leftClick"},
@@ -60,8 +61,6 @@ struct pauseModal : Argon::Node, std::enable_shared_from_this<pauseModal> {
         menu(std::vector<GrowButton*>{&resume, &options, &back})
     {
         back.willHide = false;
-
-        zAxisPos = constants::zAxisPos/2;
 
         zAxisPosBG = zAxisPos*1.5;
 

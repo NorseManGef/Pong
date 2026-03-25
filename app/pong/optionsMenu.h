@@ -11,6 +11,7 @@
 
 #include "wall.h"
 #include "ButtonInterface.h"
+#include "constants.h"
 #include "menu.h"
 #include "buttonUtils.h"
 
@@ -43,9 +44,20 @@ struct OptionsMenu : Argon::Node {
 
     bool changed;
 
-    OptionsMenu(std::shared_ptr<Argon::Node> prevNode):
+    float zAxisPos;
+    float zAxisPosBG;
+    float xRange;
+    float yRange;
+
+    /*!
+        \param prevNode the node from which the optionsMenu was opened.
+        \param zAxisPos the zAxisPos of the previous node. 
+        This menu's zAxisPos will be set to half of that value.
+    */
+    OptionsMenu(std::shared_ptr<Argon::Node> prevNode, float zAxisPos):
         useSelection(false),
         changed(false),
+        zAxisPos(zAxisPos/2),
         Back(std::vector<std::string>{"select", "leftClick"},
              [=](){ return prevNode; },
              Argon::Vector2f(1,1),
@@ -68,13 +80,31 @@ struct OptionsMenu : Argon::Node {
 
         menu(std::vector<GrowButton*>{&Back, &Controls, &Video, &Audio})
     {
+        zAxisPosBG = zAxisPos*1.5;
+
+        // Makes the xRange equal to the xRange of Pong
+        xRange = constants::xRange*(zAxisPos/constants::zAxisPos);
+
+        // Makes the yRange equal to the yRange of Pong
+        yRange = constants::yRange*(zAxisPos/constants::zAxisPos)*Argon::Screen::ratio();
+
         Back.render("BACK",font,buttonBG,Argon::kLineCenter, 0.5, 0);
         Controls.render("CONTROLS",font,buttonBG,Argon::kLineCenter, 0.5, 0);
         Video.render("VIDEO",font,buttonBG,Argon::kLineCenter, 0.5, 0);
         Audio.render("AUDIO",font,buttonBG,Argon::kLineCenter, 0.5, 0);
+
+        float lineWidth = yRange/15.;
+        outterTop.dimensions.set((xRange*2.)+lineWidth,lineWidth,1);
+        outterBottom.dimensions.set((xRange*2.)+lineWidth,lineWidth,1);
+        outterLeft.dimensions.set(lineWidth,(yRange*2.)+lineWidth,1);
+        outterRight.dimensions.set(lineWidth,(yRange*2.)+lineWidth,1);
     }
 
     std::shared_ptr<Argon::Node> animate(float time) {
+        outterTop.position.set(0,yRange,zAxisPos);
+        outterBottom.position.set(0,-yRange,zAxisPos);
+        outterLeft.position.set(-xRange,0,zAxisPos);
+        outterRight.position.set(xRange,0,zAxisPos);
         return nullptr;
     }
 };

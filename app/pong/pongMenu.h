@@ -34,7 +34,8 @@ struct PongMenu:public Argon::Node, std::enable_shared_from_this<PongMenu> {
                   Argon::Vector2f(1.5, 1.5)),
 
         Options(std::vector<std::string>{"select", "leftClick"}, 
-                  [&](){ return std::make_shared<OptionsMenu>(shared_from_this()); },
+                  [&](){ return std::make_shared<OptionsMenu>(shared_from_this(), 
+                                                              constants::zAxisPos/2); },
                   Argon::Vector2f(.75, 1),
                   Argon::Vector2f(.75*1.5, 1.5)),
 
