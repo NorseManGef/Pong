@@ -38,7 +38,7 @@ set(SRC_ARGONENGINE
     common/ArgonEngine/ScoreController.cpp
     common/ArgonEngine/Sprite.cpp
     common/ArgonEngine/Text.cpp
-    common/ArgonEngine/BorderedLabel.cpp
+    common/ArgonEngine/Addons/BorderedLabel.cpp
     common/ArgonEngine/Thread.cpp
     common/ArgonEngine/UserInterface.cpp
     common/ArgonEngine/UserMusic.cpp
