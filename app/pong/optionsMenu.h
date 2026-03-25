@@ -4,14 +4,19 @@
 #include <ArgonEngine/Node.h>
 #include <ArgonEngine/Sprite.h>
 #include <ArgonEngine/Hardware.h>
+#include <ArgonEngine/Addons/BorderedLabel.h>
 #include <memory>
 #include <cstdlib>
 #include <ctime>
 
 #include "wall.h"
 #include "ButtonInterface.h"
+#include "menu.h"
+#include "buttonUtils.h"
 
 struct OptionsMenu : Argon::Node {
+    Argon::VirtualResource font = "resource://GNF.ttf";
+    Argon::VirtualResource buttonBG = "resource://buttonBG.png";
     Wall outterTop;
     Wall outterBottom;
     Wall outterLeft;
@@ -19,10 +24,12 @@ struct OptionsMenu : Argon::Node {
 
     Wall innerLeft;
 
-    Argon::Sprite back;
-    Argon::Sprite controls;
-    Argon::Sprite video;
-    Argon::Sprite audio;
+    GrowButton Back;
+    GrowButton Controls;
+    GrowButton Video;
+    GrowButton Audio;
+
+    Menu menu;
 
     Argon::Input input;
 
@@ -30,52 +37,44 @@ struct OptionsMenu : Argon::Node {
 
     ButtonInterface& buttons = ButtonInterface::instance();
 
-    int selection;
-    int menu;
     bool useSelection;
 
     bool mouseMoved;
 
     bool changed;
 
-    OptionsMenu(std::shared_ptr<Argon::Node> prevNode) {
-        selection = 0;
-        useSelection = false;
-        changed = false;
+    OptionsMenu(std::shared_ptr<Argon::Node> prevNode):
+        useSelection(false),
+        changed(false),
+        Back(std::vector<std::string>{"select", "leftClick"},
+             [=](){ return prevNode; },
+             Argon::Vector2f(1,1),
+             Argon::Vector2f(1.5,1.5)),
 
-        back.texture = "resource://Back.png";
-        controls.texture = "resource://Controls.png";
-        video.texture = "resource://Video.png";
-        audio.texture = "resource://Audio.png";
+        Controls(std::vector<std::string>{"select", "leftClick"},
+                 [&](){ return nullptr; }, // TODO: make Controls do something
+                 Argon::Vector2f(1,1),
+                 Argon::Vector2f(1.5,1.5)),
+        
+        Video(std::vector<std::string>{"select", "leftClick"},
+              [&](){ return nullptr; }, // TODO: make Video do something
+              Argon::Vector2f(1,1),
+              Argon::Vector2f(1.5,1.5)),
+
+        Audio(std::vector<std::string>{"select", "leftClick"},
+              [&](){ return nullptr; }, // TODO: make Audio do something
+              Argon::Vector2f(1,1),
+              Argon::Vector2f(1.5,1.5)),
+
+        menu(std::vector<GrowButton*>{&Back, &Controls, &Video, &Audio})
+    {
+        Back.render("BACK",font,buttonBG,Argon::kLineCenter, 0.5, 0);
+        Controls.render("CONTROLS",font,buttonBG,Argon::kLineCenter, 0.5, 0);
+        Video.render("VIDEO",font,buttonBG,Argon::kLineCenter, 0.5, 0);
+        Audio.render("AUDIO",font,buttonBG,Argon::kLineCenter, 0.5, 0);
     }
 
     std::shared_ptr<Argon::Node> animate(float time) {
-        Argon::Vector2f mousePos(input[Argon::kInputIDMouseX].value,
-                                 input[Argon::kInputIDMouseY].value);
-        
-        mouseMoved = mousePos!=mousePosOld;
-
-        mousePosOld = mousePos;
-
-        if(selection < 0 && (buttons.isReleased("up")     || 
-                             buttons.isReleased("down")   ||
-                             buttons.isReleased("left")   ||
-                             buttons.isReleased("right")  ||
-                             buttons.isReleased("select") ||
-                             buttons.isReleased("pause"))) {
-            selection = 0;
-        } else if(mouseMoved) {
-            selection = -1;
-        }
-
-        if(menu == 0) {
-
-        }
-
-        if(menu == 1) {
-
-        }
-
         return nullptr;
     }
 };
