@@ -28,6 +28,8 @@ struct OptionsMenu : Argon::Node {
     Wall innerLeft;
     Wall innerTop;
 
+    Wall background;
+
     GrowButton Back;
     GrowButton Controls;
     GrowButton Video;
@@ -94,7 +96,7 @@ struct OptionsMenu : Argon::Node {
         Video.render("VIDEO",font,buttonBG,Argon::kLineCenter, 0.5, 0);
         Audio.render("AUDIO",font,buttonBG,Argon::kLineCenter, 0.5, 0);
 
-        float lineWidth = yRange/15.;
+        float lineWidth = yRange/30.;
         outterTop.dimensions.set((xRange*2.)+lineWidth,lineWidth,1);
         outterBottom.dimensions.set((xRange*2.)+lineWidth,lineWidth,1);
         outterLeft.dimensions.set(lineWidth,(yRange*2.)+lineWidth,1);
@@ -103,11 +105,15 @@ struct OptionsMenu : Argon::Node {
         innerLeft.dimensions.set(lineWidth,(yRange*2.)-lineWidth,1);
         innerTop.dimensions.set((xRange*2.)-lineWidth,lineWidth,1);
 
-        std::cout << "zAxisPos: " << zAxisPos << std::endl;
+        background.dimensions.set(3*(xRange*2)+lineWidth,3*(yRange*2)+lineWidth,1);
+        background.color.set(0,0,0,1);
+
     }
 
     std::shared_ptr<Argon::Node> animate(float time) {
         auto sendTo = menu.animate(time);
+
+        background.position.set(0,0,zAxisPosBG);
 
         outterTop.position.set(0,yRange,zAxisPos);
         outterBottom.position.set(0,-yRange,zAxisPos);
