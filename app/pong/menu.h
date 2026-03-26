@@ -32,7 +32,9 @@ struct Menu {
         mouseMoved(false),
         willHide(false),
         incKey("down"),
-        decKey("up")
+        decKey("up"),
+        mousePosOld(keys.magnitude("mousex"),
+                    keys.magnitude("mousey"))
     {}
 
     /*! 
@@ -45,6 +47,8 @@ struct Menu {
         willHide(false),
         incKey("down"),
         decKey("up"),
+        mousePosOld(keys.magnitude("mousex"),
+                    keys.magnitude("mousey")),
         menuButtons(menuButtons)
     {}
 
