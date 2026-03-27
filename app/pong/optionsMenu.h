@@ -16,6 +16,7 @@
 #include "constants.h"
 #include "menu.h"
 #include "buttonUtils.h"
+#include "options.h"
 
 struct OptionsMenu : Argon::Node {
     Argon::VirtualResource font = "resource://GNF.ttf";
@@ -35,9 +36,14 @@ struct OptionsMenu : Argon::Node {
     GrowButton Video;
     GrowButton Audio;
 
-    Argon::Label optionMenuType;
+    Argon::Label optionsMenuType;
 
-    Menu menu;
+    int submenuController;
+
+    Menu optmenu;
+    Menu conmenu;
+    Menu vidmenu;
+    Menu audmenu;
 
     ButtonInterface& buttons = ButtonInterface::instance();
 
@@ -65,7 +71,7 @@ struct OptionsMenu : Argon::Node {
              Argon::Vector2f(.45,.45)),
 
         Controls(std::vector<std::string>{"select", "leftClick"},
-                 [&](){ return nullptr; }, // TODO: make Controls do something
+                 [&](){ submenuController = 1; return nullptr; }, // TODO: make Controls do something
                  Argon::Vector2f(.25,.35),
                  Argon::Vector2f(.275,.45)),
         
@@ -79,11 +85,11 @@ struct OptionsMenu : Argon::Node {
               Argon::Vector2f(.35,.35),
               Argon::Vector2f(.4,.45)),
 
-        menu(std::vector<GrowButton*>{&Back, &Controls, &Video, &Audio})
+        optmenu(std::vector<GrowButton*>{&Back, &Controls, &Video, &Audio})
     {
         zAxisPosBG = zAxisPos*1.5;
 
-        menu.mousePosCorrection = abs(zAxisPos/2);
+        optmenu.mousePosCorrection = abs(zAxisPos/2);
 
         // Makes the xRange equal to the xRange of Pong
         xRange = constants::xRange*(zAxisPos/constants::zAxisPos);
@@ -108,10 +114,39 @@ struct OptionsMenu : Argon::Node {
         background.dimensions.set(3*(xRange*2)+lineWidth,3*(yRange*2)+lineWidth,1);
         background.color.set(0,0,0,1);
 
+        optionsMenuType.render_str("OPTIONS",font,Argon::kLineCenter);
+        optionsMenuType.color.set(1,1,1,1);
+        optionsMenuType.scale.set(.75, .5, 1);
+        submenuController = 0;
     }
 
     std::shared_ptr<Argon::Node> animate(float time) {
-        auto sendTo = menu.animate(time);
+        std::shared_ptr<Argon::Node> sendTo = nullptr;
+
+        if(buttons.isReleased("pause")) {
+            submenuController = 0;
+        }
+
+        switch (submenuController) {
+            case 0:
+                sendTo = optmenu.animate(time);
+                break;
+            case 1:
+                sendTo = conmenu.animate(time);
+                vidmenu.hide();
+                audmenu.hide();
+                break;
+            case 2:
+                sendTo = vidmenu.animate(time);
+                conmenu.hide();
+                audmenu.hide();
+                break;
+            case 3:
+                sendTo = audmenu.animate(time);
+                conmenu.hide();
+                audmenu.hide();
+                break;
+        }
 
         background.position.set(0,0,zAxisPosBG);
 
@@ -123,11 +158,21 @@ struct OptionsMenu : Argon::Node {
         innerLeft.position.set(-xRange*.7,0,zAxisPos);
         innerTop.position.set(0,yRange*.7,zAxisPos);
 
+        optionsMenuType.position.set(xRange*.1,yRange*.77,zAxisPos);
+
         Back.setPosition(-xRange*.85, yRange*.85,zAxisPos);
 
         Controls.setPosition(-xRange*.85, yRange*.55,zAxisPos);
         Video.setPosition(-xRange*.85, yRange*.35,zAxisPos);
         Audio.setPosition(-xRange*.85, yRange*.15,zAxisPos);
+
+        if(Controls.selected) {
+            optionsMenuType.render_str("CONTROLS",font,Argon::kLineCenter);
+        } else if(Video.selected) {
+            optionsMenuType.render_str("VIDEO",font,Argon::kLineCenter);
+        } else if(Audio.selected) {
+            optionsMenuType.render_str("AUDIO",font,Argon::kLineCenter);
+        }
 
         return sendTo;
     }
