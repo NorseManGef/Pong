@@ -1,7 +1,7 @@
 
 #include "ArgonAppFlowControl.h"
 #include "pong/options.h"
-#include "pong/ButtonInterface.h"
+#include "pong/iointerface.h"
 #include <ArgonEngine/ArgonInit.h>
 #include <SDL2/SDL.h>
 ArgonAppFlowControl* controller;
