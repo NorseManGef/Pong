@@ -52,7 +52,6 @@ struct QuitGame : Argon::Node {
 
         yes.selected = true;
         menu.selection = 0;
-        menu.mouseMoved = false;
     }
 
     void hide() {
