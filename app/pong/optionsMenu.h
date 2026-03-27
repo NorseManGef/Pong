@@ -71,17 +71,17 @@ struct OptionsMenu : Argon::Node {
              Argon::Vector2f(.45,.45)),
 
         Controls(std::vector<std::string>{"select", "leftClick"},
-                 [&](){ submenuController = 1; return nullptr; }, // TODO: make Controls do something
+                 [&](){ submenuController = 1; return nullptr; },
                  Argon::Vector2f(.25,.35),
                  Argon::Vector2f(.275,.45)),
         
         Video(std::vector<std::string>{"select", "leftClick"},
-              [&](){ return nullptr; }, // TODO: make Video do something
+              [&](){ submenuController = 2; return nullptr; },
               Argon::Vector2f(.35,.35),
               Argon::Vector2f(.4,.45)),
 
         Audio(std::vector<std::string>{"select", "leftClick"},
-              [&](){ return nullptr; }, // TODO: make Audio do something
+              [&](){ submenuController = 3; return nullptr; },
               Argon::Vector2f(.35,.35),
               Argon::Vector2f(.4,.45)),
 
