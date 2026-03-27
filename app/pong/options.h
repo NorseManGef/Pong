@@ -190,6 +190,7 @@ struct Options : Argon::ReflectionBase {
     // Video
     float uiScale;
     bool particles;
+    resolution res = resolution::FHD;
 
     // Controls
     Keybinds keybinds;
