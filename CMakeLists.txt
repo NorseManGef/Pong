@@ -53,7 +53,7 @@ set(SRC_ARGONAPP
     app/ArgonAppFlowControl.cpp
     app/main.cpp
     app/pong/options.cpp
-    app/pong/ButtonInterface.cpp
+    app/pong/iointerface.cpp
 )
 
 set(SRC_BULLET
