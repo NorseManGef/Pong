@@ -12,7 +12,7 @@
 #include "pauseMenu.h"
 #include "paddle.h"
 #include "constants.h"
-#include "ButtonInterface.h"
+#include "iointerface.h"
 
 struct Pong : Argon::Node, std::enable_shared_from_this<Pong> {
     Ball ball;
@@ -26,7 +26,7 @@ struct Pong : Argon::Node, std::enable_shared_from_this<Pong> {
 
     std::shared_ptr<Argon::Node> mainMenu;
 
-    ButtonInterface& buttons = ButtonInterface::instance();
+    IOInterface& buttons = IOInterface::instance();
     
     Pong(std::shared_ptr<Argon::Node> mainMenu): 
         mainMenu(mainMenu)

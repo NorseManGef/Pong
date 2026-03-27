@@ -10,7 +10,7 @@ void manual_redraw(){
 }
 int main(int argc, char** argv){
     Options::initialize();
-    ButtonInterface::instance().initialize();
+    IOInterface::instance().initialize();
     Argon::initialize_engine("ArgonSoftware","ArgonApp");
     int run =1;
     Argon::set_manual_redraw(manual_redraw);

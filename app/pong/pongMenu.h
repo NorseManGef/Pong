@@ -8,7 +8,7 @@
 
 #include "pong.h"
 #include "optionsMenu.h"
-#include "ButtonInterface.h"
+#include "iointerface.h"
 #include "buttonUtils.h"
 #include "menu.h"
 #include "quit.h"

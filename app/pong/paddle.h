@@ -10,13 +10,13 @@
 
 #include "object.h"
 #include "util.h"
-#include "ButtonInterface.h"
+#include "iointerface.h"
 
 struct Paddle : public Object {
     Argon::Sprite sprite;
     Argon::Input input;
 
-    ButtonInterface& buttons = ButtonInterface::instance();
+    IOInterface& buttons = IOInterface::instance();
 
     float accel;
 

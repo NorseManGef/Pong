@@ -13,7 +13,7 @@
 #include "object.h"
 #include "constants.h"
 #include "wall.h"
-#include "ButtonInterface.h"
+#include "iointerface.h"
 #include "buttonUtils.h"
 #include "menu.h"
 #include "optionsMenu.h"
@@ -38,7 +38,7 @@ struct menuReturnModal : Argon::Node {
     float xRange;
     float yRange;
 
-    ButtonInterface& buttons = ButtonInterface::instance();
+    IOInterface& buttons = IOInterface::instance();
 
     Menu menu;
 

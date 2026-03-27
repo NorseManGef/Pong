@@ -11,7 +11,7 @@
 #include "constants.h"
 #include "wall.h"
 #include "menuReturnModal.h"
-#include "ButtonInterface.h"
+#include "iointerface.h"
 #include "menu.h"
 #include "buttonUtils.h"
 #include "optionsMenu.h"
@@ -40,7 +40,7 @@ struct pauseModal : Argon::Node, std::enable_shared_from_this<pauseModal> {
 
     std::shared_ptr<Argon::Node> mainMenu;
 
-    ButtonInterface& buttons = ButtonInterface::instance();
+    IOInterface& buttons = IOInterface::instance();
 
     pauseModal(std::shared_ptr<Argon::Node> backTo, std::shared_ptr<Argon::Node> mainMenu):
         backTo(backTo),

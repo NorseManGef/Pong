@@ -3,7 +3,7 @@
 
 #include <ArgonEngine/Addons/BorderedLabel.h>
 #include <ArgonEngine/Node.h>
-#include "ButtonInterface.h"
+#include "iointerface.h"
 #include <vector>
 #include <functional>
 
@@ -12,7 +12,7 @@ struct GrowButton : public Argon::Addons::BorderedLabel {
     bool willHide;
     std::vector<std::string> keybinds;
     std::function<std::shared_ptr<Argon::Node>()> sendTo;
-    ButtonInterface& keys = ButtonInterface::instance();
+    IOInterface& keys = IOInterface::instance();
 
     float x_min;
     float x_max;

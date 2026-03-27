@@ -19,7 +19,7 @@ struct Menu {
     /*! \brief the key which, when pressed, will decrement the selection */
     std::string decKey;
 
-    ButtonInterface& keys = ButtonInterface::instance();
+    IOInterface& keys = IOInterface::instance();
     Argon::Vector2f mousePosOld;
     bool mouseMoved;
     bool willHide;

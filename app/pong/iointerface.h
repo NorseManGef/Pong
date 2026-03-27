@@ -11,14 +11,14 @@
 
 #define optkey Options::getInstance().keybinds
 
-class Button {
+class Key {
 private:
     bool _isPressed;
     uint32_t _keybind; 
 
 public:
-    Button(): _isPressed(false) {}
-    Button(uint32_t keybind): _keybind(keybind), _isPressed(false) {}
+    Key(): _isPressed(false) {}
+    Key(uint32_t keybind): _keybind(keybind), _isPressed(false) {}
 
     void reset() {
         _isPressed = false;
@@ -51,14 +51,14 @@ public:
 /// @brief The interface through which a set of Buttons is managed
 /// for most use cases, you need only call isReleased(), or isPressed()
 /// for a list of valid keys, see initilize()
-class ButtonInterface {
+class IOInterface {
 public:   
     /// @brief Adds a button
     /// @param name the name of the button to be added
     /// @param keybind the button itself
     void addButton(std::string name, uint32_t keybind) {
-        Button button(keybind);
-        std::vector<Button> buttonVec;
+        Key button(keybind);
+        std::vector<Key> buttonVec;
         buttonVec.push_back(button);
 
         if(!buttons.emplace(name, buttonVec).second) {
@@ -135,7 +135,7 @@ public:
         buttons.clear();
     }
 
-    static ButtonInterface& instance() {
+    static IOInterface& instance() {
         return _instance;
     }
 
@@ -159,12 +159,12 @@ public:
     }
 
 private:
-    std::unordered_map<std::string, std::vector<Button>> buttons;
+    std::unordered_map<std::string, std::vector<Key>> buttons;
     Argon::Input input;
 
-    ButtonInterface() {}
+    IOInterface() {}
 
-    static ButtonInterface _instance;
+    static IOInterface _instance;
 
     void initHelper(std::string name, const std::vector<uint32_t> keys) {
         for(auto i : keys) {

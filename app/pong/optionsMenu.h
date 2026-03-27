@@ -12,7 +12,7 @@
 #include <ctime>
 
 #include "wall.h"
-#include "ButtonInterface.h"
+#include "iointerface.h"
 #include "constants.h"
 #include "menu.h"
 #include "buttonUtils.h"
@@ -45,7 +45,7 @@ struct OptionsMenu : Argon::Node {
     Menu vidmenu;
     Menu audmenu;
 
-    ButtonInterface& buttons = ButtonInterface::instance();
+    IOInterface& buttons = IOInterface::instance();
 
     bool useSelection;
 
