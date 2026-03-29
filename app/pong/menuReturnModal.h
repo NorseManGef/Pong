@@ -59,8 +59,6 @@ struct menuReturnModal : Argon::Node {
     {
         zAxisPos = constants::zAxisPos/4;
 
-        menu.mousePosCorrection = abs(zAxisPos);
-
         zAxisPosBG = zAxisPos*1.5;
 
         // Makes the visible range of the x dimension one third of the xRange of Pong

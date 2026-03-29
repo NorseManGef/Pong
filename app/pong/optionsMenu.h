@@ -87,8 +87,6 @@ struct OptionsMenu : Argon::Node {
     {
         zAxisPosBG = zAxisPos*1.5;
 
-        optmenu.mousePosCorrection = abs(zAxisPos/2);
-
         // Makes the xRange equal to the xRange of Pong
         xRange = constants::xRange*(zAxisPos/constants::zAxisPos);
 
