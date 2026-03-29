@@ -90,7 +90,7 @@ std::shared_ptr<Argon::Node> Menu::animate(float time) {
 
     if(mouseMoved) {
         for(auto &i : menuButtons) {
-            auto x = buttonHover(*i, mousePos*mousePosCorrection, time);
+            auto x = buttonHover(*i, mousePos*std::abs(i->zPosition()), time);
             if(x!=nullptr) {
                 sendTo = x;
                 willHide = i->willHide;

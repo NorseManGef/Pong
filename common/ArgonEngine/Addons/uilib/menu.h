@@ -27,8 +27,6 @@ struct Menu {
     bool mouseMoved;
     bool willHide;
 
-    float mousePosCorrection = 10;
-
     /*! \brief Constructor for the Menu object */
     Menu();
 
