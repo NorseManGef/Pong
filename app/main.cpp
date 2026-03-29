@@ -1,16 +1,15 @@
 
 #include "ArgonAppFlowControl.h"
 #include "pong/options.h"
-#include "pong/iointerface.h"
 #include <ArgonEngine/ArgonInit.h>
 #include <SDL2/SDL.h>
+#include <unordered_map>
 ArgonAppFlowControl* controller;
 void manual_redraw(){
     if(controller->draw())Argon::swap_buffers();
 }
 int main(int argc, char** argv){
     Options::initialize();
-    IOInterface::instance().initialize();
     Argon::initialize_engine("ArgonSoftware","ArgonApp");
     int run =1;
     Argon::set_manual_redraw(manual_redraw);

@@ -10,6 +10,7 @@
 #include <fstream>
 #include <algorithm>
 #include <iostream>
+#include <ArgonEngine/Addons/uilib/ui.h>
 
 #include "constants.h"
 
@@ -26,160 +27,6 @@ enum class resolution { // UW = ultrawide
     UHDUW = 9,
 }; 
 
-struct Keynames {
-    static bool populated;
-    static std::unordered_map<std::string, uint32_t> map;
-
-    static uint32_t getKey(const std::string& keyname) {
-        if(!populated) {
-            populate();
-        }
-
-        return map[keyname];
-    }
-
-    static uint32_t getKey(const Argon::StringIntern& keyname) {
-        return getKey(keyname.str());
-    }
-
-    static void populate() {
-        #include "keypop_intern.inc"        
-        populated = true;
-    }
-};
-
-struct Keybinds : public Argon::ReflectionBase {
-    using bindSet = std::vector<Argon::StringIntern>;
-    using codeSet = std::vector<uint32_t>;
-
-    bindSet pause;
-    bindSet leftClick;
-    bindSet mouseX;
-    bindSet mouseY;
-
-    bindSet menuUp;
-    bindSet menuDown;
-    bindSet menuLeft;
-    bindSet menuRight;
-    bindSet select;
-
-    bindSet paddleUp;
-    bindSet paddleDown;
-    bindSet holdBall;
-
-    const codeSet getPause() const {
-        codeSet result(pause.size());
-        std::transform(pause.begin(), pause.end(), result.begin(), 
-                       [](const Argon::StringIntern& s) {
-                            return Keynames::getKey(s);
-                       });
-        return result;
-    }
-
-    const codeSet getLeftClick() const {
-        codeSet result(leftClick.size());
-        std::transform(leftClick.begin(), leftClick.end(), result.begin(), 
-                       [](const Argon::StringIntern& s) {
-                            return Keynames::getKey(s);
-                       });
-        return result;
-    }
-
-    const codeSet getMouseX() const {
-        codeSet result(mouseX.size());
-        std::transform(mouseX.begin(), mouseX.end(), result.begin(), 
-                       [](const Argon::StringIntern& s) {
-                            return Keynames::getKey(s);
-                       });
-        return result;
-    }
-
-    const codeSet getMouseY() const {
-        codeSet result(mouseY.size());
-        std::transform(mouseY.begin(), mouseY.end(), result.begin(), 
-                       [](const Argon::StringIntern& s) {
-                            return Keynames::getKey(s);
-                       });
-        return result;
-    }
-
-    const codeSet getMenuUp() const {
-        codeSet result(menuUp.size());
-        std::transform(menuUp.begin(), menuUp.end(), result.begin(), 
-                       [](const Argon::StringIntern& s) {
-                            return Keynames::getKey(s);
-                       });
-        return result;
-    }
-
-    const codeSet getMenuDown() const {
-        codeSet result(menuDown.size());
-        std::transform(menuDown.begin(), menuDown.end(), result.begin(), 
-                       [](const Argon::StringIntern& s) {
-                            return Keynames::getKey(s);
-                       });
-        return result;
-    }
-
-    const codeSet getMenuLeft() const {
-        codeSet result(menuLeft.size());
-        std::transform(menuLeft.begin(), menuLeft.end(), result.begin(), 
-                       [](const Argon::StringIntern& s) {
-                            return Keynames::getKey(s);
-                       });
-        return result;
-    }
-
-    const codeSet getMenuRight() const {
-        codeSet result(menuRight.size());
-        std::transform(menuRight.begin(), menuRight.end(), result.begin(), 
-                       [](const Argon::StringIntern& s) {
-                            return Keynames::getKey(s);
-                       });
-        return result;
-    }
-
-    const codeSet getSelect() const {
-        codeSet result(select.size());
-        std::transform(select.begin(), select.end(), result.begin(), 
-                       [](const Argon::StringIntern& s) {
-                            return Keynames::getKey(s);
-                       });
-        return result;
-    }
-
-    const codeSet getPaddleUp() const {
-        codeSet result(paddleUp.size());
-        std::transform(paddleUp.begin(), paddleUp.end(), result.begin(), 
-                       [](const Argon::StringIntern& s) {
-                            return Keynames::getKey(s);
-                       });
-        return result;
-    }
-
-    const codeSet getPaddleDown() const {
-        codeSet result(paddleDown.size());
-        std::transform(paddleDown.begin(), paddleDown.end(), result.begin(), 
-                       [](const Argon::StringIntern& s) {
-                            return Keynames::getKey(s);
-                       });
-        return result;
-    }
-
-    const codeSet getHoldBall() const {
-        codeSet result(holdBall.size());
-        std::transform(holdBall.begin(), holdBall.end(), result.begin(), 
-                       [](const Argon::StringIntern& s) {
-                            return Keynames::getKey(s);
-                       });
-        return result;
-    }
-
-
-
-    //MAKE_VISIT_HEAD(Keybinds);
-};
-
 
 struct Options : Argon::ReflectionBase {
     // Audio
@@ -192,8 +39,9 @@ struct Options : Argon::ReflectionBase {
     bool particles;
     resolution res = resolution::FHD;
 
-    // Controls
-    Keybinds keybinds;
+
+    // Keybinds
+    std::unordered_map<std::string, std::vector<Argon::StringIntern>> keymap;
 
     void save() {
         write(constants::OPTIONS_PATH);
@@ -227,36 +75,21 @@ struct Options : Argon::ReflectionBase {
         uiScale = 1;
 
         particles = true;
+        
+        keymap["pause"] = {"escape", "menu"};
+        keymap["leftClick"] = {"mouseleft"};
+        keymap["mousex"] = {"mousex"};
+        keymap["mousey"] = {"mousey"};
+        keymap["up"] = {"up", "k"};
+        keymap["down"] = {"down", "j"};
+        keymap["left"] = {"left", "h"};
+        keymap["right"] = {"right", "l"};
+        keymap["select"] = {"enter", " "};
+        keymap["paddleUp"] = {"up", "k"};
+        keymap["paddleDown"] = {"down", "j"};
+        keymap["holdBall"] = {" "};
 
-        keybinds.pause.push_back("escape");
-        keybinds.pause.push_back("menu");
-
-        keybinds.leftClick.push_back("mouseleft");
-        keybinds.mouseX.push_back("mousex");
-        keybinds.mouseY.push_back("mousey");
-
-        keybinds.menuUp.push_back("up");
-        keybinds.menuUp.push_back("k");
-
-        keybinds.menuDown.push_back("down");
-        keybinds.menuDown.push_back("j");
-
-        keybinds.menuLeft.push_back("left");
-        keybinds.menuLeft.push_back("h");
-
-        keybinds.menuRight.push_back("right");
-        keybinds.menuRight.push_back("l");
-
-        keybinds.select.push_back("enter");
-        keybinds.select.push_back(" ");
-
-        keybinds.paddleUp.push_back("up");
-        keybinds.paddleUp.push_back("k");
-
-        keybinds.paddleDown.push_back("down");
-        keybinds.paddleDown.push_back("j");
-
-        keybinds.holdBall.push_back("space");
+        IOInterface::instance().initialize(keymap);
     }
 
 private:

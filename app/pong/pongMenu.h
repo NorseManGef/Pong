@@ -5,12 +5,10 @@
 #include <ArgonEngine/ArgonInit.h>
 #include <ArgonEngine/Hardware.h>
 #include <ArgonEngine/Addons/BorderedLabel.h>
+#include <ArgonEngine/Addons/uilib/ui.h>
 
 #include "pong.h"
 #include "optionsMenu.h"
-#include "iointerface.h"
-#include "buttonUtils.h"
-#include "menu.h"
 #include "quit.h"
 
 #ifndef PONGMENU_H
@@ -20,18 +18,19 @@ struct PongMenu:public Argon::Node, std::enable_shared_from_this<PongMenu> {
     Argon::VirtualResource font = "resource://GNF.ttf";
     Argon::VirtualResource buttonBG = "resource://buttonBG.png";
     Argon::Label Title;
-    GrowButton StartGame;
-    GrowButton Options;
-    GrowButton Quit;
+    Argon::Addons::GrowButton StartGame;
+    Argon::Addons::GrowButton Options;
+    Argon::Addons::GrowButton Quit;
     Argon::Timer timer;
 
-    Menu menu;
+    Argon::Addons::Menu menu;
 
     PongMenu():
         StartGame(std::vector<std::string>{"select", "leftClick"}, 
                   [&](){ return std::make_shared<Pong>(shared_from_this()); },
                   Argon::Vector2f(1, 1),
-                  Argon::Vector2f(1.5, 1.5)),
+                  Argon::Vector2f(1.5, 1.5),
+                  .7),
 
         Options(std::vector<std::string>{"select", "leftClick"}, 
                   [&](){ return std::make_shared<OptionsMenu>(shared_from_this(), 
@@ -44,7 +43,7 @@ struct PongMenu:public Argon::Node, std::enable_shared_from_this<PongMenu> {
                   Argon::Vector2f(1, 1),
                   Argon::Vector2f(1.5, 1.5)),
 
-        menu(std::vector<GrowButton*>{&StartGame, &Options, &Quit})
+        menu(std::vector<Argon::Addons::Button*>{&StartGame, &Options, &Quit})
     {
         Argon::Screen::title = "PONG";
         Title.color.set(1,0,1,1);

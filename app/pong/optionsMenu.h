@@ -7,15 +7,13 @@
 #include <ArgonEngine/Sprite.h>
 #include <ArgonEngine/Hardware.h>
 #include <ArgonEngine/Addons/BorderedLabel.h>
+#include <ArgonEngine/Addons/uilib/ui.h>
 #include <memory>
 #include <cstdlib>
 #include <ctime>
 
 #include "wall.h"
-#include "iointerface.h"
 #include "constants.h"
-#include "menu.h"
-#include "buttonUtils.h"
 #include "options.h"
 
 struct OptionsMenu : Argon::Node {
@@ -31,19 +29,19 @@ struct OptionsMenu : Argon::Node {
 
     Wall background;
 
-    GrowButton Back;
-    GrowButton Controls;
-    GrowButton Video;
-    GrowButton Audio;
+    Argon::Addons::GrowButton Back;
+    Argon::Addons::GrowButton Controls;
+    Argon::Addons::GrowButton Video;
+    Argon::Addons::GrowButton Audio;
 
     Argon::Label optionsMenuType;
 
     int submenuController;
 
-    Menu optmenu;
-    Menu conmenu;
-    Menu vidmenu;
-    Menu audmenu;
+    Argon::Addons::Menu optmenu;
+    Argon::Addons::Menu conmenu;
+    Argon::Addons::Menu vidmenu;
+    Argon::Addons::Menu audmenu;
 
     IOInterface& buttons = IOInterface::instance();
 
@@ -85,7 +83,7 @@ struct OptionsMenu : Argon::Node {
               Argon::Vector2f(.35,.35),
               Argon::Vector2f(.4,.45)),
 
-        optmenu(std::vector<GrowButton*>{&Back, &Controls, &Video, &Audio})
+        optmenu(std::vector<Argon::Addons::Button*>{&Back, &Controls, &Video, &Audio})
     {
         zAxisPosBG = zAxisPos*1.5;
 

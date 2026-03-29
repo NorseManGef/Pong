@@ -4,6 +4,7 @@
 #include <ArgonEngine/Node.h>
 #include <ArgonEngine/Sprite.h>
 #include <ArgonEngine/Hardware.h>
+#include <ArgonEngine/Addons/uilib/iointerface.h>
 #include <memory>
 #include <cstdlib>
 #include <ctime>
@@ -12,7 +13,6 @@
 #include "pauseMenu.h"
 #include "paddle.h"
 #include "constants.h"
-#include "iointerface.h"
 
 struct Pong : Argon::Node, std::enable_shared_from_this<Pong> {
     Ball ball;

@@ -5,11 +5,10 @@
 #include <ArgonEngine/VirtualResource.h>
 #include <ArgonEngine/Text.h>
 #include <ArgonEngine/ArgonInit.h>
+#include <ArgonEngine/Addons/uilib/ui.h>
 #include <vector>
 #include <functional>
 
-#include "buttonUtils.h"
-#include "menu.h"
 #include "constants.h"
 
 struct QuitGame : Argon::Node {
@@ -17,10 +16,10 @@ struct QuitGame : Argon::Node {
 
     Argon::Label message;
 
-    GrowButton yes;
-    GrowButton no;
+    Argon::Addons::GrowButton yes;
+    Argon::Addons::GrowButton no;
 
-    Menu menu;
+    Argon::Addons::Menu menu;
 
     std::shared_ptr<Argon::Node> backTo;
 
@@ -39,7 +38,7 @@ struct QuitGame : Argon::Node {
            Argon::Vector2f(1,1),
            Argon::Vector2f(2,2)),
 
-        menu(std::vector<GrowButton*>{&yes, &no})
+        menu(std::vector<Argon::Addons::Button*>{&yes, &no})
     {
         message.color.set(1,1,1,1);
         message.render_str("Are you sure you want to quit?",font,Argon::kLineCenter);

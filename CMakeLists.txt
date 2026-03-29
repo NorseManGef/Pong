@@ -38,7 +38,6 @@ set(SRC_ARGONENGINE
     common/ArgonEngine/ScoreController.cpp
     common/ArgonEngine/Sprite.cpp
     common/ArgonEngine/Text.cpp
-    common/ArgonEngine/Addons/BorderedLabel.cpp
     common/ArgonEngine/Thread.cpp
     common/ArgonEngine/UserInterface.cpp
     common/ArgonEngine/UserMusic.cpp
@@ -46,6 +45,11 @@ set(SRC_ARGONENGINE
     common/ArgonEngine/VirtualResource.cpp
     common/ArgonEngine/VirtualResourceImage.cpp
     common/ArgonEngine/Curves.cpp
+    common/ArgonEngine/Addons/BorderedLabel.cpp
+    common/ArgonEngine/Addons/uilib/iointerface.cpp
+    common/ArgonEngine/Addons/uilib/buttonUtils.cpp
+    common/ArgonEngine/Addons/uilib/menu.cpp
+    common/ArgonEngine/Addons/uilib/keynames.cpp
 )
 
 set(SRC_ARGONAPP
@@ -53,7 +57,6 @@ set(SRC_ARGONAPP
     app/ArgonAppFlowControl.cpp
     app/main.cpp
     app/pong/options.cpp
-    app/pong/iointerface.cpp
 )
 
 set(SRC_BULLET

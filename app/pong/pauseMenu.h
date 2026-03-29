@@ -11,9 +11,6 @@
 #include "constants.h"
 #include "wall.h"
 #include "menuReturnModal.h"
-#include "iointerface.h"
-#include "menu.h"
-#include "buttonUtils.h"
 #include "optionsMenu.h"
 
 struct pauseModal : Argon::Node, std::enable_shared_from_this<pauseModal> {
@@ -25,11 +22,11 @@ struct pauseModal : Argon::Node, std::enable_shared_from_this<pauseModal> {
     Wall right;
     Wall background;
 
-    GrowButton resume;
-    GrowButton options;
-    GrowButton back;
+    Argon::Addons::GrowButton resume;
+    Argon::Addons::GrowButton options;
+    Argon::Addons::GrowButton back;
 
-    Menu menu;
+    Argon::Addons::Menu menu;
 
     float zAxisPos;
     float zAxisPosBG;
@@ -58,7 +55,7 @@ struct pauseModal : Argon::Node, std::enable_shared_from_this<pauseModal> {
              [=](){ return std::make_shared<menuReturnModal>(shared_from_this(), mainMenu); },
              Argon::Vector2f(1, 1),
              Argon::Vector2f(1.25, 1.25)),
-        menu(std::vector<GrowButton*>{&resume, &options, &back})
+        menu(std::vector<Argon::Addons::Button*>{&resume, &options, &back})
     {
         back.willHide = false;
 
@@ -85,6 +82,9 @@ struct pauseModal : Argon::Node, std::enable_shared_from_this<pauseModal> {
         background.dimensions.set(xRange*2*bgOffset, yRange*2*bgOffset, 1);
 
         background.color = Argon::kBlackColor;
+
+        resume.selected = true;
+        menu.selection = 0;
     }
 
     void hide() {
@@ -116,6 +116,10 @@ struct pauseModal : Argon::Node, std::enable_shared_from_this<pauseModal> {
         resume.setPosition(0, yRange*.6, zAxisPos);
         options.setPosition(0, yRange*.1, zAxisPos);
         back.setPosition(0, -yRange*.4, zAxisPos);
+
+        if(menu.keys.isReleased("pause")) {
+            return backTo;
+        }
         
         if(menu.willHide)hide();
 

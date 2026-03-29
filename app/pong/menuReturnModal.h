@@ -9,13 +9,11 @@
 #include <cstdlib>
 #include <ctime>
 #include <functional>
+#include <ArgonEngine/Addons/uilib/ui.h>
 
 #include "object.h"
 #include "constants.h"
 #include "wall.h"
-#include "iointerface.h"
-#include "buttonUtils.h"
-#include "menu.h"
 #include "optionsMenu.h"
 
 struct menuReturnModal : Argon::Node {
@@ -30,8 +28,8 @@ struct menuReturnModal : Argon::Node {
 
     Argon::Label question;
 
-    GrowButton yes;
-    GrowButton no;
+    Argon::Addons::GrowButton yes;
+    Argon::Addons::GrowButton no;
 
     float zAxisPos;
     float zAxisPosBG;
@@ -40,7 +38,7 @@ struct menuReturnModal : Argon::Node {
 
     IOInterface& buttons = IOInterface::instance();
 
-    Menu menu;
+    Argon::Addons::Menu menu;
 
     std::shared_ptr<Argon::Node> mainMenu;
     std::shared_ptr<Argon::Node> backTo;
@@ -57,7 +55,7 @@ struct menuReturnModal : Argon::Node {
            Argon::Vector2f(.3, .3),
            Argon::Vector2f(.45, .45)),
 
-        menu(std::vector<GrowButton*>{&yes, &no})
+        menu(std::vector<Argon::Addons::Button*>{&yes, &no})
     {
         zAxisPos = constants::zAxisPos/4;
 
@@ -89,6 +87,9 @@ struct menuReturnModal : Argon::Node {
         question.render_str("Are you sure you want\nto return to menu?", font, Argon::kLineCenter);
         menu.incKey = "left";
         menu.decKey = "right";
+
+        yes.selected = true;
+        menu.selection = 0;
     }
 
     void hide() {
@@ -123,6 +124,9 @@ struct menuReturnModal : Argon::Node {
         question.position.set(0, yRange/3, zAxisPos);
         question.scale.set(.16, .16, 1);
 
+        if(menu.keys.isReleased("pause")){
+            return backTo;
+        }
         
         return sendTo;
     }

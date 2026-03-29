@@ -3,10 +3,6 @@
 
 Options Options::options;
 
-bool Keynames::populated = false;
-
-std::unordered_map<std::string, uint32_t> Keynames::map;
-
 //MAKE_VISIT_IMPL(Options, {
 //    ADD_VAR(masterVolume);
 //    ADD_VAR(musicVolume);
