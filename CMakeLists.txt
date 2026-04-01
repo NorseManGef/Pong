@@ -50,6 +50,7 @@ set(SRC_ARGONENGINE
     common/ArgonEngine/Addons/uilib/buttonUtils.cpp
     common/ArgonEngine/Addons/uilib/menu.cpp
     common/ArgonEngine/Addons/uilib/keynames.cpp
+    common/ArgonEngine/Addons/uilib/sliderUtils.cpp
 )
 
 set(SRC_ARGONAPP
