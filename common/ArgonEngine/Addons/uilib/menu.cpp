@@ -28,23 +28,27 @@ void Menu::addButton(Button* button) {
 }
 
 void Menu::incSelection() {
-    menuButtons[selection]->selected = false;
-    selection += 1;
-    if(selection >= menuButtons.size()) {
-        selection = 0;
-    }
+    if(menuButtons.size()>0){
+        menuButtons[selection]->selected = false;
+        selection += 1;
+        if(selection >= menuButtons.size()) {
+            selection = 0;
+        }
 
-    menuButtons[selection]->selected = true;
+        menuButtons[selection]->selected = true;
+    }
 }
 
 void Menu::decSelection() {
-    menuButtons[selection]->selected = false;
-    selection -= 1;
-    if(selection < 0) {
-        selection = menuButtons.size()-1;
-    }
+    if(menuButtons.size()>0) {
+        menuButtons[selection]->selected = false;
+        selection -= 1;
+        if(selection < 0) {
+            selection = menuButtons.size()-1;
+        }
 
-    menuButtons[selection]->selected = true;
+        menuButtons[selection]->selected = true;
+    }
 }
 
 void Menu::hide() {
