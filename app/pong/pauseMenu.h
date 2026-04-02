@@ -55,7 +55,7 @@ struct pauseModal : Argon::Node, std::enable_shared_from_this<pauseModal> {
              [=](){ return std::make_shared<menuReturnModal>(shared_from_this(), mainMenu); },
              Argon::Vector2f(1, 1),
              Argon::Vector2f(1.25, 1.25)),
-        menu(std::vector<Argon::Addons::Button*>{&resume, &options, &back})
+        menu(std::vector<Argon::Addons::Selectable*>{&resume, &options, &back})
     {
         back.willHide = false;
 

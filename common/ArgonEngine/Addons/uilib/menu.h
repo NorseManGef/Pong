@@ -3,6 +3,8 @@
 
 #include <vector>
 #include "buttonUtils.h"
+#include "selectable.h"
+#include "sliderUtils.h"
 #include "iointerface.h"
 #include <iostream>
 
@@ -14,7 +16,7 @@ namespace Addons {
     into buttons, and what happens when you press them.
 */
 struct Menu {
-    std::vector<Button*> menuButtons;
+    std::vector<Selectable*> menuItems;
     int selection;
 
     /*! \brief the key which, when pressed, will increment the selection */
@@ -32,15 +34,15 @@ struct Menu {
 
     /*! 
         \brief Constructor for the Menu object
-        \param menuButtons an std::vector<GrowButton*> of buttons in the menu 
+        \param menuItems an std::vector<GrowButton*> of buttons in the menu 
     */
-    Menu(std::vector<Button*> menuButtons);
+    Menu(std::vector<Selectable*> menuItems);
 
     /*! 
         \brief adds buttons to the menu
         \param button GrowButton* of the button to add
     */
-    void addButton(Button* button);
+    void addItem(Selectable* Item);
 
     /*! \brief increments the selection */
     void incSelection();
@@ -52,7 +54,7 @@ struct Menu {
     void hide();
 
     /*! @brief checks if a button is being hovered over by the mouse */
-    std::shared_ptr<Argon::Node> buttonHover(Button& button, Argon::Vector2f mp, float time);
+    std::shared_ptr<Argon::Node> itemHover(Selectable& item, Argon::Vector2f mp, float time);
 
     /*! 
         \brief iterates through all buttons, and checks if they're selected.

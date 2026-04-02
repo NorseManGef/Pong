@@ -4,15 +4,15 @@
 #include <ArgonEngine/Addons/BorderedLabel.h>
 #include <ArgonEngine/Node.h>
 #include "iointerface.h"
+#include "selectable.h"
 #include <vector>
 #include <functional>
 
 namespace Argon {
 namespace Addons {
 
-struct Button : public Argon::Addons::BorderedLabel {
-    bool selected;
-    bool willHide;
+struct Button : public Selectable {
+    BorderedLabel button;
 
     std::vector<std::string> keybinds;
     std::function<std::shared_ptr<Argon::Node>()> sendTo;
@@ -20,6 +20,39 @@ struct Button : public Argon::Addons::BorderedLabel {
 
     Button(std::vector<std::string> keybinds,
            std::function<std::shared_ptr<Argon::Node>()> sendTo);
+
+    void setPosition(float x, float y, float z) { button.setPosition(x,y,z); }
+
+    void setxPosition(float x) { button.setxPosition(x); }
+
+    void setyPosition(float y) { button.setyPosition(y); }
+
+    void setzPosition(float z) { button.setzPosition(z); }
+
+    void setxScale(float x) { button.setxScale(x); }
+
+    void setyScale(float y) { button.setyScale(y); }
+
+    void setzScale(float z) { button.setzScale(z); }
+
+    float xPosition() { return button.xPosition(); }
+
+    float yPosition() { return button.yPosition(); }
+
+    float zPosition() { return button.zPosition(); }
+
+    bool overlaps_screen_coord(Vector2f coord) {
+        return button.Sprite::overlaps_screen_coord(coord);
+    }
+
+    void render(const char* string,
+                VirtualResource font,
+                VirtualResource bgTexture,
+                LineStyle style = kLineCenter,
+                float marginX = 0.5,
+                float marginY = 0.5) {
+        button.render(string,font,bgTexture,style,marginX,marginY);
+    }
 
     virtual std::shared_ptr<Argon::Node> animate(float time);
 };

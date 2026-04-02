@@ -43,7 +43,7 @@ struct PongMenu:public Argon::Node, std::enable_shared_from_this<PongMenu> {
                   Argon::Vector2f(1, 1),
                   Argon::Vector2f(1.5, 1.5)),
 
-        menu(std::vector<Argon::Addons::Button*>{&StartGame, &Options, &Quit})
+        menu(std::vector<Argon::Addons::Selectable*>{&StartGame, &Options, &Quit})
     {
         Argon::Screen::title = "PONG";
         Title.color.set(1,0,1,1);

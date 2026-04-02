@@ -4,14 +4,10 @@
 #include <ArgonEngine/Sprite.h>
 #include <ArgonEngine/Text.h>
 #include "iointerface.h"
+#include "selectable.h"
 
 namespace Argon {
 namespace Addons {
-
-enum Axis {
-    x = 0,
-    y = 1
-};
 
 struct SliderSprite : public Sprite {
     SliderSprite(): Sprite() {};
@@ -21,15 +17,8 @@ struct SliderSprite : public Sprite {
     bool selected;
 };
 
-struct Slider {
-    const int numSprites;
-    SliderSprite* sprites;
-
+struct Slider : public Selectable {
     Sprite line;
-
-    Sprite* background;
-
-    enum Axis axis;
 
     Label valueDisplay;
 
@@ -41,56 +30,52 @@ struct Slider {
 
     float maxVal;
     
-    float marginX;
-    
-    float marginY;
+    Slider();
 
-    bool isQuantized;
+    Slider(float minVal, float maxVal);
 
-    IOInterface keys = IOInterface::instance();
+    virtual void render(VirtualResource lineTexture, 
+                   VirtualResource spriteTexture,
+                   VirtualResource labelFont) = 0;
 
-    Slider(int numSprites, float minVal, float maxVal, Axis axis);
+    virtual void updateValueDisplay(float value, VirtualResource labelFont) = 0;
 
-    Slider() = delete;
-
-    ~Slider();
-
-    virtual void setPosition(float x, float y, float z);
-
-    virtual void setxPosition(float x);
-
-    virtual void setyPosition(float y);
-
-    virtual void setzPosition(float z);
-
-    virtual void setDimensions(float x, float y, float z);
-
-    virtual void setxDimensions(float x);
-
-    virtual void setyDimensions(float y);
-
-    virtual void setzDimensions(float z);
-
-    virtual void setScale(float x, float y, float z);
-
-    virtual void setxScale(float x);
-
-    virtual void setyScale(float y);
-
-    virtual void setzScale(float z);
-
-    virtual bool keyboardable();
-
-    virtual void setVal(float val, SliderSprite& sprite);
-
-    virtual void animate(const Vector2f &mousePos, const bool mouseMoved);
+    virtual std::shared_ptr<Argon::Node> animate(float time) = 0;
 
 private:
     float zOffset = 1/100;
 };
 
 struct FillSlider : public Slider {
-    FillSlider(float minVal, float maxVal, Axis = x);
+    SliderSprite sprite;
+
+    FillSlider();
+
+    FillSlider(float minVal, float maxVal);
+
+    void setPosition(float x, float y, float z);
+
+    void setxPosition(float x);
+
+    void setyPosition(float y);
+
+    void setzPosition(float z);
+
+    void setxScale(float x);
+
+    void setyScale(float y);
+
+    void setzScale(float z);
+
+    bool overlaps_screen_coord(Vector2f coord);
+
+    void render(VirtualResource lineTexture,
+                VirtualResource spriteTexture,
+                VirtualResource labelFont);
+
+    std::shared_ptr<Argon::Node> animate(float time);
+
+    void updateValueDisplay(float value, VirtualResource labelFont);
 };
 
 struct FillSliderBG : public FillSlider {

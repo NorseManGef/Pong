@@ -30,8 +30,6 @@ struct OptionsMenu : Argon::Node {
 
     Wall background;
 
-    Argon::Addons::Slider slider;
-
     Argon::Addons::GrowButton Back;
     Argon::Addons::GrowButton Controls;
     Argon::Addons::GrowButton Video;
@@ -86,18 +84,8 @@ struct OptionsMenu : Argon::Node {
               Argon::Vector2f(.35,.35),
               Argon::Vector2f(.4,.45)),
 
-        slider(1, 0, 100, Argon::Addons::Axis(0)),
-
-        optmenu(std::vector<Argon::Addons::Button*>{&Back, &Controls, &Video, &Audio})
+        optmenu(std::vector<Argon::Addons::Selectable*>{&Back, &Controls, &Video, &Audio})
     {
-        slider.line.texture = "resource://Wall.png";
-        slider.line.color.set(1,0,0,1);
-
-        slider.sprites[0].color.set(0,1,0,1);
-        slider.sprites[0].texture = "resource://Wall.png";
-
-        slider.isQuantized = false;
-
         zAxisPosBG = zAxisPos*1.5;
 
         // Makes the xRange equal to the xRange of Pong
@@ -131,11 +119,6 @@ struct OptionsMenu : Argon::Node {
 
     std::shared_ptr<Argon::Node> animate(float time) {
         std::shared_ptr<Argon::Node> sendTo = nullptr;
-
-        slider.setPosition(0,0,zAxisPos);
-
-        slider.animate(Argon::Vector2f(optmenu.keys.magnitude("mousex"),
-                                       optmenu.keys.magnitude("mousey")), time);
 
         if(buttons.isReleased("pause")) {
             submenuController = 0;

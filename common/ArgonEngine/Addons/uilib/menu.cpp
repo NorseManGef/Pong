@@ -12,7 +12,7 @@ Menu::Menu():
                 keys.magnitude("mousey"))
 {}
 
-Menu::Menu(std::vector<Button*> menuButtons):
+Menu::Menu(std::vector<Selectable*> menuItems):
     selection(-1),
     mouseMoved(false),
     willHide(false),
@@ -20,51 +20,51 @@ Menu::Menu(std::vector<Button*> menuButtons):
     decKey("up"),
     mousePosOld(keys.magnitude("mousex"),
                 keys.magnitude("mousey")),
-    menuButtons(menuButtons)
+    menuItems(menuItems)
 {}
 
-void Menu::addButton(Button* button) {
-    menuButtons.push_back(button);
+void Menu::addItem(Selectable* item) {
+    menuItems.push_back(item);
 }
 
 void Menu::incSelection() {
-    if(menuButtons.size()>0){
-        menuButtons[selection]->selected = false;
+    if(menuItems.size()>0){
+        menuItems[selection]->selected = false;
         selection += 1;
-        if(selection >= menuButtons.size()) {
+        if(selection >= menuItems.size()) {
             selection = 0;
         }
 
-        menuButtons[selection]->selected = true;
+        menuItems[selection]->selected = true;
     }
 }
 
 void Menu::decSelection() {
-    if(menuButtons.size()>0) {
-        menuButtons[selection]->selected = false;
+    if(menuItems.size()>0) {
+        menuItems[selection]->selected = false;
         selection -= 1;
         if(selection < 0) {
-            selection = menuButtons.size()-1;
+            selection = menuItems.size()-1;
         }
 
-        menuButtons[selection]->selected = true;
+        menuItems[selection]->selected = true;
     }
 }
 
 void Menu::hide() {
-    for(auto &i : menuButtons) {
+    for(auto &i : menuItems) {
         i->setzPosition(0);
     }
 }
 
-std::shared_ptr<Argon::Node> Menu::buttonHover(Button& button, Argon::Vector2f mp, float time) {
-    if(button.Sprite::overlaps_screen_coord(mp)) {
-        button.selected = true;
+std::shared_ptr<Argon::Node> Menu::itemHover(Selectable& item, Argon::Vector2f mp, float time) {
+    if(item.overlaps_screen_coord(mp)) {
+        item.selected = true;
     } else {
-        button.selected = false;
+        item.selected = false;
     }
 
-    return button.animate(time);
+    return item.animate(time);
 }
 
 std::shared_ptr<Argon::Node> Menu::animate(float time) {
@@ -93,15 +93,15 @@ std::shared_ptr<Argon::Node> Menu::animate(float time) {
     }
 
     if(mouseMoved) {
-        for(auto &i : menuButtons) {
-            auto x = buttonHover(*i, mousePos*std::abs(i->zPosition()), time);
+        for(auto &i : menuItems) {
+            auto x = itemHover(*i, mousePos*std::abs(i->zPosition()), time);
             if(x!=nullptr) {
                 sendTo = x;
                 willHide = i->willHide;
             }
         }
     } else {
-        for(auto &i : menuButtons) {
+        for(auto &i : menuItems) {
             auto x = i->animate(time);
             if(x!=nullptr) {
                 sendTo = x;

@@ -38,7 +38,7 @@ struct QuitGame : Argon::Node {
            Argon::Vector2f(1,1),
            Argon::Vector2f(2,2)),
 
-        menu(std::vector<Argon::Addons::Button*>{&yes, &no})
+        menu(std::vector<Argon::Addons::Selectable*>{&yes, &no})
     {
         message.color.set(1,1,1,1);
         message.render_str("Are you sure you want to quit?",font,Argon::kLineCenter);

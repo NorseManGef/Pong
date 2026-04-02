@@ -55,7 +55,7 @@ struct menuReturnModal : Argon::Node {
            Argon::Vector2f(.3, .3),
            Argon::Vector2f(.45, .45)),
 
-        menu(std::vector<Argon::Addons::Button*>{&yes, &no})
+        menu(std::vector<Argon::Addons::Selectable*>{&yes, &no})
     {
         zAxisPos = constants::zAxisPos/4;
 

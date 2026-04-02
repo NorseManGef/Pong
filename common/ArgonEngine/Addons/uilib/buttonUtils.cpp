@@ -4,11 +4,9 @@ using namespace Argon::Addons;
 
 Button::Button(std::vector<std::string> keybinds,
                std::function<std::shared_ptr<Argon::Node>()> sendTo):
-    BorderedLabel(),
+    button(),
     keybinds(keybinds),
-    sendTo(sendTo),
-    willHide(true),
-    selected(false)
+    sendTo(sendTo)
 {};
 
 std::shared_ptr<Argon::Node> Button::animate(float time) {
@@ -34,16 +32,16 @@ GrowButton::GrowButton(std::vector<std::string> keybinds,
 
 std::shared_ptr<Argon::Node> GrowButton::animate(float time) {
     if(selected) {
-        setxScale(BorderedLabel::Label::scale[0] * alpha + x_max * (1-alpha));
-        setyScale(BorderedLabel::Label::scale[1] * alpha + y_max * (1-alpha));
+        setxScale(button.Label::scale[0] * alpha + x_max * (1-alpha));
+        setyScale(button.Label::scale[1] * alpha + y_max * (1-alpha));
         for(auto &i : keybinds) {
             if(keys.isReleased(i)) {
                 return sendTo();
             }
         }
     } else {
-         setxScale(BorderedLabel::Label::scale[0] * alpha + x_min * (1-alpha));
-         setyScale(BorderedLabel::Label::scale[1] * alpha + y_min * (1-alpha));
+         setxScale(button.Label::scale[0] * alpha + x_min * (1-alpha));
+         setyScale(button.Label::scale[1] * alpha + y_min * (1-alpha));
     }
 
     return nullptr;
