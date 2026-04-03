@@ -110,6 +110,8 @@ std::shared_ptr<Argon::Node> Menu::animate(float time) {
         }
     }
 
+    keys.reset();
+
     if(willHide)hide();
 
     return sendTo;

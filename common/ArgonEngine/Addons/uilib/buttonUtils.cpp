@@ -32,16 +32,24 @@ GrowButton::GrowButton(std::vector<std::string> keybinds,
 
 std::shared_ptr<Argon::Node> GrowButton::animate(float time) {
     if(selected) {
-        setxScale(button.Label::scale[0] * alpha + x_max * (1-alpha));
-        setyScale(button.Label::scale[1] * alpha + y_max * (1-alpha));
+        bool pressed = false;
         for(auto &i : keybinds) {
             if(keys.isReleased(i)) {
                 return sendTo();
+            } else if(keys.isPressed(i)) {
+                pressed = true;
             }
         }
+        if(!pressed){
+            setxScale(button.Label::scale[0] * alpha + x_max * (1-alpha));
+            setyScale(button.Label::scale[1] * alpha + y_max * (1-alpha));
+        } else {
+           setxScale(button.Label::scale[0] * alpha + (x_min*1.1) * (1-alpha));
+           setyScale(button.Label::scale[1] * alpha + (y_min*1.1) * (1-alpha));
+        }
     } else {
-         setxScale(button.Label::scale[0] * alpha + x_min * (1-alpha));
-         setyScale(button.Label::scale[1] * alpha + y_min * (1-alpha));
+        setxScale(button.Label::scale[0] * alpha + x_min * (1-alpha));
+        setyScale(button.Label::scale[1] * alpha + y_min * (1-alpha));
     }
 
     return nullptr;

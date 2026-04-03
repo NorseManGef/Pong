@@ -42,7 +42,10 @@ void IOInterface::removebutton(std::string name) {
 }
 
 bool IOInterface::isReleased(std::string name) {
-    for(auto &i : buttons[name]) {
+    auto it = buttons.find(name);
+    if(it == buttons.end()) return false;
+
+    for(auto &i : buttons.find(name)->second) {
         if(i.isReleased(input)) {
             return true;
         }
@@ -79,8 +82,8 @@ std::vector<uint32_t> IOInterface::keybind(std::string name) {
 
 void IOInterface::reset() {
     for(auto &i : buttons) {
-        for(auto x : i.second) {
-            x.reset();
+        for(int x = 0; x < i.second.size(); ++x) {
+            i.second[x].isReleased(input);
         }
     }
 }
