@@ -4,12 +4,7 @@
 #include <ArgonEngine/VirtualResource.h>
 #include <ArgonEngine/Hardware.h>
 #include <unordered_map>
-#include <memory>
-#include <cstdlib>
-#include <ctime>
 #include <fstream>
-#include <algorithm>
-#include <iostream>
 #include <ArgonEngine/Addons/uilib/ui.h>
 
 #include "constants.h"

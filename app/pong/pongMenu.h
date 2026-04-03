@@ -1,6 +1,5 @@
 #include <ArgonEngine/Node.h>
 #include <ArgonEngine/Text.h>
-#include <sstream>
 #include <ArgonEngine/Sprite.h>
 #include <ArgonEngine/ArgonInit.h>
 #include <ArgonEngine/Hardware.h>
