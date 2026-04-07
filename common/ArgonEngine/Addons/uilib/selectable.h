@@ -13,13 +13,23 @@ struct Selectable {
 
     Selectable(): selected(false), willHide(true) {}
 
-    virtual void setPosition(float x, float y, float z) = 0;
+    virtual void setPosition(float x, float y, float z) {
+        setxPosition(x);
+        setyPosition(y);
+        setzPosition(z);
+    }
 
     virtual void setxPosition(float x) = 0;
 
     virtual void setyPosition(float y) = 0;
 
     virtual void setzPosition(float z) = 0;
+
+    virtual void setScale(float x, float y, float z) {
+        setxScale(x);
+        setyScale(y);
+        setzScale(z);
+    }
 
     virtual void setxScale(float x) = 0;
 
