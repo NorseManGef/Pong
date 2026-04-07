@@ -7,14 +7,30 @@ Slider::Slider(Axis axis, float minVal, float maxVal):
     maxVal(maxVal), 
     axis(axis), 
     displayPrecision(6), 
-    quantized(true)
-{}
+    quantized(true),
+    mouseable(true),
+    keyboardable(true),
+    kbnum(1)
+{
+    if(axis == x) {
+        inckey = "right";
+        deckey = "left";
+    } else {
+        inckey = "up";
+        deckey = "down";
+    }
+}
 
 Slider::Slider(float minVal, float maxVal): 
     minVal(minVal), 
     maxVal(maxVal), 
     displayPrecision(6), 
-    quantized(true) 
+    quantized(true),
+    mouseable(true),
+    keyboardable(true),
+    kbnum(1),
+    inckey("right"),
+    deckey("left")
 {}
 
 Slider::Slider(Axis axis): 
@@ -22,15 +38,31 @@ Slider::Slider(Axis axis):
     maxVal(100), 
     axis(axis), 
     displayPrecision(6), 
-    quantized(true) 
-{}
+    quantized(true),
+    mouseable(true),
+    keyboardable(true),
+    kbnum(1)
+{
+    if(axis == x) {
+        inckey = "right";
+        deckey = "left";
+    } else {
+        inckey = "up";
+        deckey = "down";
+    }
+}
 
 Slider::Slider(): 
     minVal(0), 
     maxVal(100), 
     axis(x), 
     displayPrecision(6),
-    quantized(true) 
+    quantized(true),
+    mouseable(true),
+    keyboardable(true),
+    kbnum(1),
+    inckey("right"),
+    deckey("left")
 {}
 
 FillSlider::FillSlider(): Slider() {
@@ -151,16 +183,27 @@ bool FillSlider::overlaps_screen_coord(Vector2f coord) {
 std::shared_ptr<Argon::Node> FillSlider::animate(float time) {
     setBounds();
 
-    if(selected) {
-        pressed = keys.isPressed("leftClick");
-    } else {
-        if(!keys.isPressed("leftClick")) {
-            pressed = false;
+    if(mouseable) {
+        if(selected) {
+            pressed = keys.isPressed("leftClick");
+        } else {
+            if(!keys.isPressed("leftClick")) {
+                pressed = false;
+            }
+        }
+
+        if(pressed) {
+            sprite.value = calculateValue();
         }
     }
 
-    if(pressed) {
-        sprite.value = calculateValue();
+    if(keyboardable && selected) {
+        if(keys.isReleased(inckey)) {
+            sprite.value += kbnum;
+        }
+        if(keys.isReleased(deckey)) {
+            sprite.value -= kbnum;
+        }
     }
 
     if(quantized) {
@@ -208,10 +251,12 @@ void FillSlider::calcSpritePos() {
 
 void FillSlider::render(VirtualResource lineTexture,
                         VirtualResource spriteTexture,
-                        VirtualResource labelFont) {
+                        VirtualResource labelFont,
+                        LineStyle labelStyle) {
     line.texture = lineTexture;
     sprite.texture = spriteTexture;
     valueDisplayFont = labelFont;
+    lineStyle = labelStyle;
     updateValueDisplay(sprite.value, labelFont);
     setBounds();
 }
@@ -223,10 +268,10 @@ void Slider::updateValueDisplay(float value, VirtualResource labelFont) {
     if(!quantized) {
         std::string str = std::to_string(value);
         valueDisplay.render_str(str.substr(0, str.find_first_of(".")+displayPrecision+1).c_str(),
-                                labelFont,kLineCenter);
+                                labelFont,lineStyle);
     } else {
         valueDisplay.render_str(std::to_string((int)value).c_str(),
-                                labelFont,kLineCenter);
+                                labelFont,lineStyle);
     }
 }
 

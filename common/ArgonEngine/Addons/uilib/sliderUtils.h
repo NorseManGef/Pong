@@ -29,6 +29,8 @@ struct Slider : public Selectable {
 
     Label valueDisplay;
 
+    LineStyle lineStyle;
+
     VirtualResource valueDisplayFont;
 
     float minBound;
@@ -41,11 +43,21 @@ struct Slider : public Selectable {
 
     int displayPrecision;
 
+    int kbnum;
+
+    std::string inckey;
+
+    std::string deckey;
+
     bool quantized;
 
     bool pressed;
 
     bool willHide;
+
+    bool keyboardable;
+
+    bool mouseable;
 
     Axis axis;
     
@@ -79,7 +91,8 @@ struct Slider : public Selectable {
 
     virtual void render(VirtualResource lineTexture, 
                    VirtualResource spriteTexture,
-                   VirtualResource labelFont) = 0;
+                   VirtualResource labelFont,
+                   LineStyle labelStyle = kLineCenter) = 0;
 
     virtual void updateValueDisplay(float value, VirtualResource labelFont);
 
@@ -102,6 +115,8 @@ struct Slider : public Selectable {
     virtual void setLinezScale(float z) = 0;
 
     virtual float getValue() = 0;
+
+    virtual void setValue(float value) = 0;
 
     virtual void hide() {
         setzPosition(0);
@@ -164,12 +179,17 @@ struct FillSlider : public Slider {
 
     void render(VirtualResource lineTexture,
                 VirtualResource spriteTexture,
-                VirtualResource labelFont);
+                VirtualResource labelFont,
+                LineStyle style = kLineCenter);
 
     std::shared_ptr<Argon::Node> animate(float time);
 
     float getValue() {
         return sprite.value;
+    }
+
+    void setValue(float value) {
+        sprite.value = value;
     }
 
 private:
