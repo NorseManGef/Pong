@@ -37,6 +37,18 @@ struct Selectable {
 
     virtual void setzScale(float z) = 0;
 
+    virtual void setDimensions(float x, float y, float z) {
+        setxDimensions(x);
+        setyDimensions(y);
+        setzDimensions(z);
+    }
+
+    virtual void setxDimensions(float x) = 0;
+
+    virtual void setyDimensions(float y) = 0;
+
+    virtual void setzDimensions(float z) = 0;
+
     virtual float xPosition() = 0;
 
     virtual float yPosition() = 0;

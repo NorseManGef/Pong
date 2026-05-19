@@ -35,6 +35,12 @@ struct Button : public Selectable {
 
     void setzScale(float z) { button.setzScale(z); }
 
+    void setxDimensions(float x) { button.setxDimensions(x); }
+
+    void setyDimensions(float y) { button.setyDimensions(y); }
+
+    void setzDimensions(float z) { button.setzDimensions(z); }
+
     float xPosition() { return button.xPosition(); }
 
     float yPosition() { return button.yPosition(); }

@@ -8,7 +8,6 @@
 #include <ArgonEngine/Hardware.h>
 #include <ArgonEngine/Addons/BorderedLabel.h>
 #include <ArgonEngine/Addons/uilib/ui.h>
-#include <ArgonEngine/Addons/uilib/sliderUtils.h>
 #include <memory>
 #include <cstdlib>
 #include <ctime>
@@ -34,6 +33,8 @@ struct OptionsMenu : Argon::Node {
     Argon::Addons::GrowButton Controls;
     Argon::Addons::GrowButton Video;
     Argon::Addons::GrowButton Audio;
+
+    Argon::Addons::FillSliderBG Volume;
 
     Argon::Label optionsMenuType;
 
@@ -84,7 +85,18 @@ struct OptionsMenu : Argon::Node {
               Argon::Vector2f(.35,.35),
               Argon::Vector2f(.4,.45)),
 
-        optmenu(std::vector<Argon::Addons::Selectable*>{&Back, &Controls, &Video, &Audio})
+        optmenu(
+            std::vector<Argon::Addons::Selectable*>{
+                &Back, 
+                &Controls, 
+                &Video, 
+                &Audio
+            }
+        ),
+        
+        Volume(),
+
+        audmenu(std::vector<Argon::Addons::Selectable*>{&Volume})
     {
         zAxisPosBG = zAxisPos*1.5;
 
@@ -98,6 +110,15 @@ struct OptionsMenu : Argon::Node {
         Controls.render("CONTROLS",font,buttonBG,Argon::kLineCenter, 0.5, 0);
         Video.render("VIDEO",font,buttonBG,Argon::kLineCenter, 0.5, 0);
         Audio.render("AUDIO",font,buttonBG,Argon::kLineCenter, 0.5, 0);
+
+        Volume.marginY = .2;
+        Volume.render("resource://Wall.png", "resource://Wall.png", buttonBG, font, Argon::kLineLeft);
+        Volume.line.color = Argon::kBlackColor;
+        Volume.sprite.color = Argon::kRedColor;
+        Volume.valueDisplay.color = Argon::kGreenColor;
+
+        Volume.setyDimensions(.75);
+        Volume.setxDimensions(.75);
 
         float lineWidth = yRange/30.;
         outterTop.dimensions.set((xRange*2.)+lineWidth,lineWidth,1);
@@ -115,6 +136,11 @@ struct OptionsMenu : Argon::Node {
         optionsMenuType.color.set(1,1,1,1);
         optionsMenuType.scale.set(.75, .5, 1);
         submenuController = 0;
+    }
+
+    std::shared_ptr<Argon::Node> doAudMenu(float time) {
+        Volume.setPosition(xRange*.75, yRange*.5*0, zAxisPos);
+        return audmenu.animate(time);
     }
 
     std::shared_ptr<Argon::Node> animate(float time) {
@@ -139,9 +165,9 @@ struct OptionsMenu : Argon::Node {
                 audmenu.hide();
                 break;
             case 3:
-                sendTo = audmenu.animate(time);
+                sendTo = doAudMenu(time);
                 conmenu.hide();
-                audmenu.hide();
+                vidmenu.hide();
                 break;
         }
 

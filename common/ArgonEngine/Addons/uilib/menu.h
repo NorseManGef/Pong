@@ -4,7 +4,7 @@
 #include <vector>
 #include "buttonUtils.h"
 #include "selectable.h"
-#include "sliderUtils.h"
+#include "sliders/sliderUtils.h"
 #include "iointerface.h"
 #include <iostream>
 

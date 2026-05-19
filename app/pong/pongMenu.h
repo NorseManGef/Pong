@@ -22,6 +22,9 @@ struct PongMenu:public Argon::Node, std::enable_shared_from_this<PongMenu> {
     Argon::Addons::GrowButton Quit;
     Argon::Timer timer;
 
+    Argon::Addons::BorderedLabel labelTest;
+    Argon::Addons::BorderedLabel labelTest2;
+
     Argon::Addons::Menu menu;
 
     PongMenu():
@@ -42,7 +45,11 @@ struct PongMenu:public Argon::Node, std::enable_shared_from_this<PongMenu> {
                   Argon::Vector2f(1, 1),
                   Argon::Vector2f(1.5, 1.5)),
 
-        menu(std::vector<Argon::Addons::Selectable*>{&StartGame, &Options, &Quit})
+        menu(std::vector<Argon::Addons::Selectable*>{
+            &StartGame, 
+            &Options, 
+            &Quit
+        })
     {
         Argon::Screen::title = "PONG";
         Title.color.set(1,0,1,1);
@@ -53,6 +60,26 @@ struct PongMenu:public Argon::Node, std::enable_shared_from_this<PongMenu> {
 
         Title.render_str("PONG",font,Argon::kLineCenter);
         Title.scale.set(2,2,1);
+
+        labelTest.render(
+            "TESTING",
+            font,
+            buttonBG, 
+            Argon::kLineCenter);
+        labelTest2.render(
+            "TESTING",
+            "resource://times.ttf",
+            buttonBG,
+            Argon::kLineCenter);
+
+        labelTest.setPosition(15, 0, constants::zAxisPos);
+        labelTest2.setPosition(-15, 0, constants::zAxisPos);
+
+        labelTest.setxScale(1);
+        labelTest.setyScale(.5);
+        
+        labelTest2.setxScale(1);
+        labelTest2.setyScale(.5);
     }
 
     void hide() {
@@ -70,6 +97,9 @@ struct PongMenu:public Argon::Node, std::enable_shared_from_this<PongMenu> {
         StartGame.setPosition(0,1.75,constants::zAxisPos/2);
         Options.setPosition(0,0,constants::zAxisPos/2); 
         Quit.setPosition(0,-1.75,constants::zAxisPos/2);
+
+        Argon::Vector2f mp(menu.keys.magnitude("mousex"),
+                           menu.keys.magnitude("mousey"));
 
         Title.rotation.set_euler_xyz(0, sin(timer.time()) * 0.2, 0);
 
