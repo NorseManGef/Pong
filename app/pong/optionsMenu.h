@@ -111,14 +111,13 @@ struct OptionsMenu : Argon::Node {
         Video.render("VIDEO",font,buttonBG,Argon::kLineCenter, 0.5, 0);
         Audio.render("AUDIO",font,buttonBG,Argon::kLineCenter, 0.5, 0);
 
-        Volume.marginY = .2;
-        Volume.render("resource://Wall.png", "resource://Wall.png", buttonBG, font, Argon::kLineLeft);
+        Volume.marginY = 0.5;
+        Volume.render("resource://Wall.png", "resource://Wall.png", "resource://Wall.png", font, Argon::kLineLeft);
         Volume.line.color = Argon::kBlackColor;
         Volume.sprite.color = Argon::kRedColor;
         Volume.valueDisplay.color = Argon::kGreenColor;
 
-        Volume.setyDimensions(.75);
-        Volume.setxDimensions(.75);
+        Volume.setScale(2, .2, 0);
 
         float lineWidth = yRange/30.;
         outterTop.dimensions.set((xRange*2.)+lineWidth,lineWidth,1);

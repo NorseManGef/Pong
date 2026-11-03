@@ -58,14 +58,7 @@ struct BorderedLabel : public Label, public Sprite {
         \param y the position to set it to.
     */
     void setyPosition(float y){
-        if(!Label::isMultiLine) {
-            Label::position[1] = y - Label::bounds.size[1] * 
-                                Label::scale[1]/(2+(1/(Label::scale[1]*10)));
-        } else {
-            Label::position[1] = y + Label::bounds.size[1] *
-                                        Label::scale[1]/(4.8+(1/(Label::scale[1]*10)));
-        }
-        
+        Label::position[1] = y;        
         Sprite::position[1] = y;
     }
 
@@ -97,7 +90,6 @@ struct BorderedLabel : public Label, public Sprite {
     void setxScale(float x){
         Label::scale[0] = x;
         Sprite::scale[0] = Label::bounds.size[0]*Label::scale[0] + marginX*Label::scale[0];
-        setxPosition(Sprite::position[0]);
     }
 
     /*!
@@ -107,7 +99,6 @@ struct BorderedLabel : public Label, public Sprite {
     void setyScale(float y){
         Label::scale[1] = y;
         Sprite::scale[1] = Label::bounds.size[1]*Label::scale[1] + marginY*Label::scale[1];
-        setyPosition(Sprite::position[1]);
     }
 
     /*!

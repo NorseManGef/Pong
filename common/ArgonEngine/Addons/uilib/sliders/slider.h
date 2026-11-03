@@ -148,31 +148,15 @@ struct Slider : public Selectable {
     virtual void setValueDisplayScale(float x, float y, float z);
 
     virtual void setValueDisplayxScale(float x) {
-        valueDisplay.position[0] += vdScaleOffset[0];
         valueDisplay.scale[0] = x;
     }
 
     virtual void setValueDisplayyScale(float y) {
-        valueDisplay.position[1] += vdScaleOffset[1];
         valueDisplay.scale[1] = y;
     }
 
     virtual void setValueDisplayzScale(float z) {
         valueDisplay.scale[2] = z;
-    }
-
-    virtual Vector2f vdOnScreenPos() {
-        Vector2f vec;
-        vec[0] = valueDisplay.position[0]-vdScaleOffset[0]/2;
-        vec[1] = valueDisplay.position[1]-vdScaleOffset[1]/2;
-        return vec;
-    }
-
-    virtual Vector2f vdOnScreenBounds() {
-        Vector2f vec;
-        vec[0] = valueDisplay.bounds.size[0]*valueDisplay.scale[0];
-        vec[1] = valueDisplay.bounds.size[1]*valueDisplay.scale[1];
-        return vec;
     }
 
     float zOffset = .001;

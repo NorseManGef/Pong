@@ -270,7 +270,11 @@ void TTFFont::get_font_size_ratio(float &w_r, float & h_r){
         line_style = kLineLeft;
         max_width = 0.;
         isMultiLine = false;
+        line_spacing = 1;
+        yOffset = -.4775; // TODO: figure out why this number is what it is
+                          // and dynamically calculate it.
     }
+
     void Label::render_str(const char* string,Argon::VirtualResource font,LineStyle style){
         line_style = style;
         std::vector<Line> lines;
@@ -280,7 +284,7 @@ void TTFFont::get_font_size_ratio(float &w_r, float & h_r){
 
         int size =0;
         float offset = 0.;
-        float y_offset=0;
+        float y_offset=yOffset;
         int last_glyph = '\0';
         Font* f = font.get_data<Font*>();
         while(true){
@@ -327,8 +331,6 @@ void TTFFont::get_font_size_ratio(float &w_r, float & h_r){
                 break;
         }
 
-        bounds.origin[0]=
-         
         bounds.origin[1]=0;
         bounds.origin[2]=0;
         vertex_array->set_size(size*6);
@@ -399,7 +401,7 @@ void TTFFont::get_font_size_ratio(float &w_r, float & h_r){
                 ++s;
             }
             
-            y_offset -= 1.;
+            y_offset -= line_spacing;
         }
         
         bounds.size[0]=max_width;

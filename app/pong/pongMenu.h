@@ -8,6 +8,7 @@
 
 #include "pong.h"
 #include "optionsMenu.h"
+#include "pong/constants.h"
 #include "quit.h"
 
 #ifndef PONGMENU_H
@@ -21,9 +22,6 @@ struct PongMenu:public Argon::Node, std::enable_shared_from_this<PongMenu> {
     Argon::Addons::GrowButton Options;
     Argon::Addons::GrowButton Quit;
     Argon::Timer timer;
-
-    Argon::Addons::BorderedLabel labelTest;
-    Argon::Addons::BorderedLabel labelTest2;
 
     Argon::Addons::Menu menu;
 
@@ -61,25 +59,6 @@ struct PongMenu:public Argon::Node, std::enable_shared_from_this<PongMenu> {
         Title.render_str("PONG",font,Argon::kLineCenter);
         Title.scale.set(2,2,1);
 
-        labelTest.render(
-            "TESTING",
-            font,
-            buttonBG, 
-            Argon::kLineCenter);
-        labelTest2.render(
-            "TESTING",
-            "resource://times.ttf",
-            buttonBG,
-            Argon::kLineCenter);
-
-        labelTest.setPosition(15, 0, constants::zAxisPos);
-        labelTest2.setPosition(-15, 0, constants::zAxisPos);
-
-        labelTest.setxScale(1);
-        labelTest.setyScale(.5);
-        
-        labelTest2.setxScale(1);
-        labelTest2.setyScale(.5);
     }
 
     void hide() {

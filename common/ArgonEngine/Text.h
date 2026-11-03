@@ -13,6 +13,7 @@
 #define __ArgonTest__Text__
 #include <ArgonEngine/Utility.h>
 #include "ArgonEngine/VirtualResourceImage.h"
+#include "ArgonEngine/Hardware.h"
 #include "ArgonEngine/Node.h"
 #include <iostream>
 
@@ -133,6 +134,9 @@ namespace Argon{
         float max_width;
         bool isMultiLine;
 
+        float line_spacing;
+        float yOffset;
+
         const char* TEXT_SHADER = "shader://text_shader.shd";
         Label();
 
@@ -144,6 +148,7 @@ namespace Argon{
             \remarks should only be used for initialization or change
         */
         void render_str(const char* string,Argon::VirtualResource font,LineStyle s = kLineLeft);
+
         MAKE_VISIT_HEAD(Label)
     };
 

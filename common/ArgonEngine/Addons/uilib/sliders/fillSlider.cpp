@@ -9,7 +9,7 @@ FillSlider::FillSlider(): Slider() {
 
     setValueDisplayPosition(
         (line.bounds.size[0]*line.scale[0]/3)+(valueDisplay.bounds.size[0]),
-        -valueDisplay.bounds.size[1]*.45*valueDisplay.scale[1],
+        0,
         0
     );
 
@@ -23,7 +23,7 @@ FillSlider::FillSlider(float minVal, float maxVal): Slider(x, minVal, maxVal) {
 
     setValueDisplayPosition(
         (line.bounds.size[0]*line.scale[0]/3)+(valueDisplay.bounds.size[0]),
-        -valueDisplay.bounds.size[1]*.45*valueDisplay.scale[1],
+        0,
         0
     );
 
@@ -39,7 +39,7 @@ FillSlider::FillSlider(Axis axis, float minVal, float maxVal):
 
         setValueDisplayPosition(
             (line.bounds.size[0]*line.scale[0]/3)+(valueDisplay.bounds.size[0]),
-            -valueDisplay.bounds.size[1]*.45*valueDisplay.scale[1],
+            0,
             0
         );
     } else {
@@ -47,7 +47,7 @@ FillSlider::FillSlider(Axis axis, float minVal, float maxVal):
         setLineScale(.5,5,.5);
 
         setValueDisplayPosition(
-            -valueDisplay.bounds.size[0]*.45*valueDisplay.scale[0],
+            0,
             (line.bounds.size[1]*line.scale[1]/3)+(valueDisplay.bounds.size[1]),
             0
         );
@@ -80,10 +80,10 @@ void FillSlider::setxPosition(float x) {
 
 void FillSliderBG::setxPosition(float x) {
     FillSlider::setxPosition(x);
-    if(vdOnScreenPos()[0] >= line.position[0]+line.bounds.size[0]) {
-        background.position[0] = line.position[0]+vdOnScreenBounds()[0]-marginX/4;
-    } else if(vdOnScreenPos()[0] <= line.position[0]-line.bounds.size[0]) {
-        background.position[0] = line.position[0]-vdOnScreenBounds()[0]+marginX/4;
+    if(valueDisplay.position[0] >= line.position[0]+line.bounds.size[0]) {
+        background.position[0] = line.position[0]+valueDisplay.bounds.size[0]*valueDisplay.scale[0]/2;
+    } else if(valueDisplay.position[0] <= line.position[0]-line.bounds.size[0]) {
+        background.position[0] = line.position[0]-valueDisplay.position[0]+marginX/4;
     } else {
         background.position[0] = line.position[0];
     }
@@ -122,11 +122,12 @@ void FillSliderBG::setzPosition(float z) {
 void FillSlider::setxScale(float x) {
     float scaleOffset = line.scale[0] - sprite.scale[0];
     float labelScaleOffset = valueDisplay.scale[0]/line.scale[0];
-    vdScaleOffset[0] = (valueDisplay.scale[0]-x)*1.9;
 
     setLinexScale(x);
     setSpritexScale(x - scaleOffset);
     setValueDisplayxScale(x*labelScaleOffset);
+    setValueDisplayxPosition((line.bounds.size[0]*line.scale[0]*.37) +
+                            (valueDisplay.bounds.size[0]*valueDisplay.scale[0]));
 }
 
 void FillSliderBG::setxScale(float x) {
